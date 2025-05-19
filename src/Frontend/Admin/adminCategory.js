@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
         currentCategoryId = category._id;
         existingImagePath = category.image;
         editCategoryNameInput.value = category.name;
-        editCategoryImagePreview.src = `https://ehs-deploy.vercel.app/${category.image}`;
+        editCategoryImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${category.image}`;
         editCategoryImagePreview.style.display = "block";
         editCategoryImageInput.value = "";
         editCategoryOverlay.classList.add("active");
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!validateImageType(file)) {
                 alert("Only images in JPEG, JPG, or PNG formats are allowed");
                 editCategoryImageInput.value = ""; // Clear the invalid file
-                editCategoryImagePreview.src = `https://ehs-deploy.vercel.app/${existingImagePath}`;
+                editCategoryImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${existingImagePath}`;
                 editCategoryImagePreview.style.display = existingImagePath ? "block" : "none";
                 return;
             }
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             reader.readAsDataURL(file);
         } else {
-            editCategoryImagePreview.src = `https://ehs-deploy.vercel.app/${existingImagePath}`;
+            editCategoryImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${existingImagePath}`;
             editCategoryImagePreview.style.display = existingImagePath ? "block" : "none";
         }
     });
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("image", categoryImage);
         }
 
-        fetchWithRetry("https://ehs-deploy.vercel.app/api/add-category", {
+        fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/add-category", {
             method: "POST",
             body: formData,
         })
@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("image", categoryImage);
         }
 
-        fetchWithRetry(`https://ehs-deploy.vercel.app/api/update-category/${currentCategoryId}`, {
+        fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/update-category/${currentCategoryId}`, {
             method: "PUT",
             body: formData,
         })
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isFetching = true;
 
         try {
-            const categories = await fetchWithRetry("https://ehs-deploy.vercel.app/api/categories", {
+            const categories = await fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/categories", {
                 method: "GET",
             });
             const tableBody = document.querySelector(".categories-table tbody");
@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${startIndex + index + 1}</td>
                         <td>
                             <div class="category-name">
-                                <img src="https://ehs-deploy.vercel.app/${category.image}" alt="${category.name}" class="category-image">
+                                <img src="https://ehs-deploy-8yty.vercel.app/${category.image}" alt="${category.name}" class="category-image">
                                 <span>${category.name}</span>
                             </div>
                         </td>
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".edit-button").forEach(button => {
                     button.addEventListener("click", function () {
                         const categoryId = button.getAttribute("data-id");
-                        fetchWithRetry(`https://ehs-deploy.vercel.app/api/category/${categoryId}`, {
+                        fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/category/${categoryId}`, {
                             method: "GET",
                         })
                             .then(category => {
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     button.addEventListener("click", function () {
                         const categoryId = button.getAttribute("data-id");
                         if (confirm("Are you sure you want to delete this category?")) {
-                            fetchWithRetry(`https://ehs-deploy.vercel.app/api/delete-category/${categoryId}`, {
+                            fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/delete-category/${categoryId}`, {
                                 method: "DELETE",
                             })
                                 .then(data => {

@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fetch Users Function
     function fetchUsers(searchQuery = "") {
-        fetch("https://ehs-deploy.vercel.app/api/users")
+        fetch("https://ehs-deploy-8yty.vercel.app/api/users")
             .then(response => response.json())
             .then(users => {
                 allUsers = users;
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Delete User Function
     function deleteUser(userId) {
         if (confirm("Are you sure you want to delete this user?")) {
-            fetch(`https://ehs-deploy.vercel.app/api/delete-user/${userId}`, {
+            fetch(`https://ehs-deploy-8yty.vercel.app/api/delete-user/${userId}`, {
                 method: "DELETE",
             })
                 .then(response => response.json())

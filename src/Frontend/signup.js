@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const response = await fetch("https://ehs-deploy.vercel.app/api/signup", { 
+            const response = await fetch("https://ehs-deploy-8yty.vercel.app/api/signup", { 
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 code: verificationCode
             };
 
-            const response = await fetch("https://ehs-deploy.vercel.app/api/verify-code", {
+            const response = await fetch("https://ehs-deploy-8yty.vercel.app/api/verify-code", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function fetchPayments() {
         try {
-            const response = await fetch('https://ehs-deploy.vercel.app/api/payments');
+            const response = await fetch('https://ehs-deploy-8yty.vercel.app/api/payments');
             if (!response.ok) throw new Error('Failed to fetch payments');
             allPayments = await response.json();
             currentPaymentPage = 1;
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const newStatus = event.target.value;
             if (!paymentId) return;
             try {
-                const response = await fetch(`https://ehs-deploy.vercel.app/api/payments/${paymentId}`, {
+                const response = await fetch(`https://ehs-deploy-8yty.vercel.app/api/payments/${paymentId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus })
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             if (!confirmed.isConfirmed) return;
             try {
-                const response = await fetch(`https://ehs-deploy.vercel.app/api/payments/${paymentId}`, {
+                const response = await fetch(`https://ehs-deploy-8yty.vercel.app/api/payments/${paymentId}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
         try {
-            const response = await fetch(`https://ehs-deploy.vercel.app/api/payments/${paymentId}`, {
+            const response = await fetch(`https://ehs-deploy-8yty.vercel.app/api/payments/${paymentId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus })

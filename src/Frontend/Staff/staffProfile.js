@@ -80,7 +80,7 @@ cancelPasswordChange.addEventListener("click", () => {
 
 async function fetchStaffData(userId) {
     try {
-        const response = await fetch(`https://ehs-deploy.vercel.app/api/staff/${userId}`);
+        const response = await fetch(`https://ehs-deploy-8yty.vercel.app/api/staff/${userId}`);
         const staffData = await response.json();
 
         if (response.ok) {
@@ -88,7 +88,7 @@ async function fetchStaffData(userId) {
             document.getElementById('phone').value = staffData.phone || '';
             document.getElementById('address').value = staffData.address || '';
             document.getElementById('category').value = staffData.categoryId?.name || staffData.category || '';
-            document.getElementById('image-preview').src = staffData.image ? `https://ehs-deploy.vercel.app/${staffData.image}` : '/Image/default-staff.png';
+            document.getElementById('image-preview').src = staffData.image ? `https://ehs-deploy-8yty.vercel.app/${staffData.image}` : '/Image/default-staff.png';
             document.getElementById('staffName').textContent = staffData.name || 'Staff';
         } else {
             Swal.fire({
@@ -131,7 +131,7 @@ submitPasswordChange.addEventListener("click", async () => {
     }
 
     try {
-        const response = await fetch("https://ehs-deploy.vercel.app/api/update-staff-password", {
+        const response = await fetch("https://ehs-deploy-8yty.vercel.app/api/update-staff-password", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
