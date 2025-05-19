@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
         currentCategoryId = category._id;
         existingImagePath = category.image;
         editCategoryNameInput.value = category.name;
-        editCategoryImagePreview.src = `https://ehs-deploy.vercel.app/${category.image}`;
+        editCategoryImagePreview.src = category.image; // Updated: Use Cloudinary URL directly
         editCategoryImagePreview.style.display = "block";
         editCategoryImageInput.value = "";
         editCategoryOverlay.classList.add("active");
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!validateImageType(file)) {
                 alert("Only images in JPEG, JPG, or PNG formats are allowed");
                 editCategoryImageInput.value = ""; // Clear the invalid file
-                editCategoryImagePreview.src = `https://ehs-deploy.vercel.app/${existingImagePath}`;
+                editCategoryImagePreview.src = existingImagePath; // Updated: Use Cloudinary URL directly
                 editCategoryImagePreview.style.display = existingImagePath ? "block" : "none";
                 return;
             }
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             reader.readAsDataURL(file);
         } else {
-            editCategoryImagePreview.src = `https://ehs-deploy.vercel.app/${existingImagePath}`;
+            editCategoryImagePreview.src = existingImagePath; // Updated: Use Cloudinary URL directly
             editCategoryImagePreview.style.display = existingImagePath ? "block" : "none";
         }
     });
@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${startIndex + index + 1}</td>
                         <td>
                             <div class="category-name">
-                                <img src="https://ehs-deploy.vercel.app/${category.image}" alt="${category.name}" class="category-image">
+                                <img src="${category.image}" alt="${category.name}" class="category-image"> <!-- Updated: Use Cloudinary URL directly -->
                                 <span>${category.name}</span>
                             </div>
                         </td>
