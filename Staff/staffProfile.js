@@ -88,7 +88,7 @@ async function fetchStaffData(userId) {
             document.getElementById('phone').value = staffData.phone || '';
             document.getElementById('address').value = staffData.address || '';
             document.getElementById('category').value = staffData.categoryId?.name || staffData.category || '';
-            document.getElementById('image-preview').src = staffData.image ? `https://ehs-deploy-sooty.vercel.app/${staffData.image}` : '/Image/default-staff.png';
+            document.getElementById('image-preview').src = staffData.image;
             document.getElementById('staffName').textContent = staffData.name || 'Staff';
         } else {
             Swal.fire({

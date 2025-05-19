@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".service-name").textContent = service.name;
         document.querySelector(".service-category").textContent = service.category;
         document.querySelector(".service-description").textContent = service.description;
-        document.querySelector(".service-image").src = `https://ehs-deploy-sooty.vercel.app/${service.image}`;
+        document.querySelector(".service-image").src = service.image;
         const servicePriceElement = document.querySelector(".service-price");
         servicePriceElement.textContent = `Rs. ${service.price}`;
         servicePriceElement.setAttribute("data-price", service.price);
