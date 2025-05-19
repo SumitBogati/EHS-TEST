@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (userRole === 'admin') {
                     window.location.href = "Admin/adminDashboard.html";
                 } else if (userRole === 'user') {
-                    window.location.href = "userService.html";
+                    window.location.href = "User/userService.html";
                 } else if (userRole === 'staff') {
                     window.location.href = "Staff/staffDashboard.html";
                 } else {
