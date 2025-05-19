@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         noDataMessage.style.display = "none";
 
         services.forEach(service => {
-            const imageUrl = service.image;
+            const imageUrl = `https://ehs-deploy.vercel.app/${service.image}`;
             const serviceCard = document.createElement("div");
             serviceCard.classList.add("service-card");
             serviceCard.dataset.category = service.category;
