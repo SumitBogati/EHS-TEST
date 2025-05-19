@@ -78,11 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const userRole = responseData.user.role;
 
                 if (userRole === 'admin') {
-                    window.location.href = "Admin/adminDashboard.html";
+                    window.location.href = "admin/adminDashboard.html";
                 } else if (userRole === 'user') {
-                    window.location.href = "User/userService.html";
+                    window.location.href = "user/userService.html";
                 } else if (userRole === 'staff') {
-                    window.location.href = "Staff/staffDashboard.html";
+                    window.location.href = "staff/staffDashboard.html";
                 } else {
                     window.location.href = "index.html";
                 }
