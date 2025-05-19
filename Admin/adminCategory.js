@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             text: 'Please login to continue.',
             confirmButtonText: 'OK'
         }).then(() => {
-            window.location.href = "/src/Frontend/index.html";
+            window.location.href = "index.html";
         });
         return;
     }
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         'You have been logged out successfully.',
                         'success'
                     ).then(() => {
-                        window.location.href = "/src/Frontend/index.html";
+                        window.location.href = "index.html";
                     });
                 }
             });
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         localStorage.removeItem("token");
                         localStorage.removeItem("userId");
                         localStorage.removeItem("userRole");
-                        window.location.href = "/src/Frontend/index.html";
+                        window.location.href = "index.html";
                     });
                     throw error;
                 }

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             text: 'Please login to continue.',
             confirmButtonText: 'OK'
         }).then(() => {
-            window.location.href = "/src/Frontend/index.html";
+            window.location.href = "index.html";
         });
         return;
     }
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         'You have been logged out successfully.',
                         'success'
                     ).then(() => {
-                        window.location.href = "/src/Frontend/index.html";
+                        window.location.href = "index.html";
                     });
                 }
             });
@@ -165,13 +165,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Add event listeners for "See all" buttons
     if (seeAllPaymentButton) {
         seeAllPaymentButton.addEventListener('click', function() {
-            window.location.href = '/src/Frontend/Admin/adminPayments.html';
+            window.location.href = 'Admin/adminPayments.html';
         });
     }
 
     if (seeAllServiceButton) {
         seeAllServiceButton.addEventListener('click', function() {
-            window.location.href = '/src/Frontend/Admin/adminService.html';
+            window.location.href = 'Admin/adminService.html';
         });
     }
 });

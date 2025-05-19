@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             text: 'Please login to continue.',
             confirmButtonText: 'OK'
         }).then(() => {
-            window.location.href = "/src/Frontend/index.html";
+            window.location.href = "index.html";
         });
         return;
     }
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         'You have been logged out successfully.',
                         'success'
                     ).then(() => {
-                        window.location.href = "/src/Frontend/index.html";
+                        window.location.href = "index.html";
                     });
                 }
             });
@@ -341,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmButtonText: "OK"
             }).then(() => {
                 // Redirect to userBooking.html after clicking OK
-                window.location.href = "/src/Frontend/User/userBookings.html";
+                window.location.href = "User/userBookings.html";
             });
         }, 500);
     } else if (paymentStatus === "failed") {
@@ -353,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmButtonText: "OK"
             }).then(() => {
                 // Redirect to userBooking.html even on failure
-                window.location.href = "/src/Frontend/User/userBookings.html";
+                window.location.href = "User/userBookings.html";
             });
         }, 500);
     }

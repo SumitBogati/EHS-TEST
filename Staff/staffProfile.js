@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
             text: 'Please login as a staff member to continue.',
             confirmButtonText: 'OK'
         }).then(() => {
-            window.location.href = "/src/Frontend/index.html";
+            window.location.href = "index.html";
         });
         return;
     }
 
-    // Logout logic with confirmation
+    // Logout logic with confirmation and ttesting
     if (logoutLink) {
         logoutLink.addEventListener("click", function (e) {
             e.preventDefault();
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         'You have been logged out successfully.',
                         'success'
                     ).then(() => {
-                        window.location.href = "/src/Frontend/index.html";
+                        window.location.href = "index.html";
                     });
                 }
             });
