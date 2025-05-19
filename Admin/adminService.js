@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.removeItem("token");
             localStorage.removeItem("userId");
             localStorage.removeItem("userRole");
-            window.location.href = "index.html";
+            window.location.href = "/index.html";
         });
         return;
     }
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         'You have been logged out successfully.',
                         'success'
                     ).then(() => {
-                        window.location.href = "index.html";
+                        window.location.href = "/index.html";
                     });
                 }
             });
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         localStorage.removeItem("token");
                         localStorage.removeItem("userId");
                         localStorage.removeItem("userRole");
-                        window.location.href = "index.html";
+                        window.location.href = "/index.html";
                     });
                     throw error;
                 }

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             text: 'Please login to continue.',
             confirmButtonText: 'OK'
         }).then(() => {
-            window.location.href = "index.html";
+            window.location.href = "/index.html";
         });
         return;
     }
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         'You have been logged out successfully.',
                         'success'
                     ).then(() => {
-                        window.location.href = "index.html";
+                        window.location.href = "/index.html";
                     });
                 }
             });

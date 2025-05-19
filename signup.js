@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (userRole === 'user') {
                     window.location.href = "userService.html"; // Redirect to user page
                 } else {
-                    window.location.href = "index.html"; // Default redirect if role is unknown or other roles
+                    window.location.href = "/index.html"; // Default redirect if role is unknown or other roles
                 }
             });
         } catch (error) {

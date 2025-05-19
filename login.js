@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (userRole === 'staff') {
                     window.location.href = "staff/staffDashboard.html";
                 } else {
-                    window.location.href = "index.html";
+                    window.location.href = "/index.html";
                 }
             });
         } catch (error) {
