@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Fetch categories from the backend
     function fetchCategories() {
-        fetch("https://ehs-deploy.vercel.app/api/categories")
+        fetch("https://ehs-deploy-sooty.vercel.app/api/categories")
             .then(response => response.json())
             .then(categories => {
                 populateFilterOptions(categories);
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function fetchServices() {
-        fetch("https://ehs-deploy.vercel.app/api/services")
+        fetch("https://ehs-deploy-sooty.vercel.app/api/services")
             .then(response => response.json())
             .then(data => {
                 allServices = data;
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         noDataMessage.style.display = "none";
 
         services.forEach(service => {
-            const imageUrl = `https://ehs-deploy.vercel.app/${service.image}`;
+            const imageUrl = `https://ehs-deploy-sooty.vercel.app/${service.image}`;
             const serviceCard = document.createElement("div");
             serviceCard.classList.add("service-card");
             serviceCard.dataset.category = service.category;

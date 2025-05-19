@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const editStaffImagePreview = document.getElementById("edit-staff-image-preview");
     const searchInput = document.querySelector(".search-input");
     const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
     const logoutLink = document.getElementById("logout-link");
 
     let currentStaffId = null;
@@ -28,20 +29,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const staffPerPage = 4;
     let isFetching = false;
 
-    // Redirect if no token found with SweetAlert
-    if (!token) {
+    // Redirect if no token or not an admin
+    if (!token || userRole !== "admin") {
         Swal.fire({
             icon: 'warning',
             title: 'Unauthorized Access',
-            text: 'Please login to continue.',
+            text: 'Please login as an admin to continue.',
             confirmButtonText: 'OK'
         }).then(() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("userRole");
             window.location.href = "/index.html";
         });
         return;
     }
 
-    // Logout logic with confirmation
+    // Logout logic with SweetAlert confirmation
     if (logoutLink) {
         logoutLink.addEventListener("click", function (e) {
             e.preventDefault();
@@ -81,12 +85,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Custom alert with cancel option
-    function showAlert(message, onConfirm) {
-        const confirmed = confirm(message);
-        if (confirmed && onConfirm) {
-            onConfirm();
-        }
+    // Custom alert with SweetAlert
+    function showAlert(message, options = {}) {
+        const { onConfirm, isError = false, isConfirm = false } = options;
+        Swal.fire({
+            icon: isError ? 'error' : isConfirm ? 'warning' : 'success',
+            title: isError ? 'Error' : isConfirm ? 'Confirm' : 'Success',
+            text: message,
+            showCancelButton: isConfirm,
+            confirmButtonText: isConfirm ? 'Yes' : 'OK',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed && onConfirm) {
+                onConfirm();
+            }
+        });
     }
 
     // Debounce function
@@ -106,17 +119,37 @@ document.addEventListener("DOMContentLoaded", function () {
                 const id = setTimeout(() => controller.abort(), timeout);
                 const response = await fetch(url, {
                     ...options,
+                    headers: {
+                        ...options.headers,
+                        Authorization: `Bearer ${token}`,
+                    },
                     signal: controller.signal,
                 });
                 clearTimeout(id);
                 const data = await response.json();
+                console.log(`Response from ${url}:`, data);
 
                 if (!response.ok) {
-                    const errorMessage = data.error || `Server error: ${response.status}`;
+                    const errorMessage = data.error || data.message || `Server error: ${response.status}`;
                     throw new Error(errorMessage);
                 }
                 return data;
             } catch (error) {
+                console.error(`Attempt ${i + 1} failed for ${url}:`, error);
+                if (error.message.includes("401") || error.message.includes("403")) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Session Expired or Unauthorized',
+                        text: 'Your session has expired or you lack admin privileges. Please log in again.',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("userId");
+                        localStorage.removeItem("userRole");
+                        window.location.href = "/index.html";
+                    });
+                    throw error;
+                }
                 if (error.message.includes("Failed to fetch") && i < retries - 1) {
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     continue;
@@ -135,9 +168,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Populate category dropdowns
     async function fetchCategories() {
         try {
-            const categories = await fetchWithRetry("https://ehs-deploy.vercel.app/api/categories");
+            const categories = await fetchWithRetry("https://ehs-deploy-sooty.vercel.app/api/categories", {
+                method: "GET",
+            });
             [addCategoryDropdown, editCategoryDropdown].forEach(dropdown => {
-                dropdown.innerHTML = '<option value="">Select Category</option>';
+                dropdown.innerHTML = '<option value="" disabled selected>Select Category</option>';
                 categories.forEach(category => {
                     const option = document.createElement("option");
                     option.value = category.name;
@@ -146,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             });
         } catch (error) {
-            showAlert("Failed to load categories");
+            showAlert(error.message || "Failed to load categories", { isError: true });
         }
     }
 
@@ -156,24 +191,18 @@ document.addEventListener("DOMContentLoaded", function () {
         addStaffForm.reset();
         addStaffImagePreview.src = "";
         addStaffImagePreview.style.display = "none";
-        addStaffEmailInput.disabled = false;
     });
 
     // Open edit overlay
     function openEditOverlay(staff) {
         currentStaffId = staff._id;
-        existingImagePath = staff.image;
+        existingImagePath = staff.image || "";
         editStaffNameInput.value = staff.name;
         editPhoneNumberInput.value = staff.phone;
         editAddressInput.value = staff.address;
         editCategoryDropdown.value = staff.category;
-        if (staff.image) {
-            editStaffImagePreview.src = `https://ehs-deploy.vercel.app/${staff.image}`;
-            editStaffImagePreview.style.display = "block";
-        } else {
-            editStaffImagePreview.src = "";
-            editStaffImagePreview.style.display = "none";
-        }
+        editStaffImagePreview.src = staff.image || "";
+        editStaffImagePreview.style.display = staff.image ? "block" : "none";
         editStaffImageInput.value = "";
         editStaffOverlay.classList.add("active");
     }
@@ -212,8 +241,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const file = addStaffImageInput.files[0];
         if (file) {
             if (!validateImageType(file)) {
-                showAlert("Only images in JPEG, JPG, or PNG formats are allowed");
+                showAlert("Only JPEG, JPG, or PNG images are allowed", { isError: true });
                 addStaffImageInput.value = "";
+                addStaffImagePreview.src = "";
                 addStaffImagePreview.style.display = "none";
                 return;
             }
@@ -234,9 +264,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const file = editStaffImageInput.files[0];
         if (file) {
             if (!validateImageType(file)) {
-                showAlert("Only images in JPEG, JPG, or PNG formats are allowed");
+                showAlert("Only JPEG, JPG, or PNG images are allowed", { isError: true });
                 editStaffImageInput.value = "";
-                editStaffImagePreview.src = existingImagePath ? `https://ehs-deploy.vercel.app/${existingImagePath}` : "";
+                editStaffImagePreview.src = existingImagePath || "";
                 editStaffImagePreview.style.display = existingImagePath ? "block" : "none";
                 return;
             }
@@ -247,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             reader.readAsDataURL(file);
         } else {
-            editStaffImagePreview.src = existingImagePath ? `https://ehs-deploy.vercel.app/${existingImagePath}` : "";
+            editStaffImagePreview.src = existingImagePath || "";
             editStaffImagePreview.style.display = existingImagePath ? "block" : "none";
         }
     });
@@ -263,8 +293,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const categoryName = addCategoryDropdown.value;
         const staffImage = addStaffImageInput.files[0];
 
-        if (!staffName || !phoneNumber || !address || !categoryName) {
-            showAlert("All required fields must be filled");
+        if (!staffName || !phoneNumber || !address || !categoryName || !staffImage) {
+            showAlert("All fields, including image, are required", { isError: true });
             return;
         }
 
@@ -272,21 +302,21 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("phone", phoneNumber);
         formData.append("address", address);
         formData.append("categoryName", categoryName);
-        if (staffImage) {
-            formData.append("image", staffImage);
-        }
+        formData.append("image", staffImage);
 
         try {
-            const data = await fetchWithRetry("https://ehs-deploy.vercel.app/api/add-staff", {
+            const data = await fetchWithRetry("https://ehs-deploy-sooty.vercel.app/api/add-staff", {
                 method: "POST",
                 body: formData,
             });
-            showAlert(data.message || "Staff added successfully", () => {
-                fetchStaff();
-                addStaffOverlay.classList.remove("active");
+            showAlert(data.message || "Staff added successfully", {
+                onConfirm: () => {
+                    fetchStaff();
+                    addStaffOverlay.classList.remove("active");
+                }
             });
         } catch (error) {
-            showAlert(error.message || "Failed to add staff");
+            showAlert(error.message || "Failed to add staff", { isError: true });
         }
     });
 
@@ -302,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const staffImage = editStaffImageInput.files[0];
 
         if (!staffName || !phoneNumber || !address || !categoryName) {
-            showAlert("All required fields must be filled");
+            showAlert("All required fields must be filled", { isError: true });
             return;
         }
 
@@ -315,16 +345,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const data = await fetchWithRetry(`https://ehs-deploy.vercel.app/api/update-staff/${currentStaffId}`, {
+            const data = await fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/update-staff/${currentStaffId}`, {
                 method: "PUT",
                 body: formData,
             });
-            showAlert(data.message || "Staff updated successfully", () => {
-                fetchStaff();
-                editStaffOverlay.classList.remove("active");
+            showAlert(data.message || "Staff updated successfully", {
+                onConfirm: () => {
+                    fetchStaff();
+                    editStaffOverlay.classList.remove("active");
+                }
             });
         } catch (error) {
-            showAlert(error.message || "Failed to update staff");
+            showAlert(error.message || "Failed to update staff", { isError: true });
         }
     });
 
@@ -334,7 +366,9 @@ document.addEventListener("DOMContentLoaded", function () {
         isFetching = true;
 
         try {
-            const staff = await fetchWithRetry("https://ehs-deploy.vercel.app/api/staff");
+            const staff = await fetchWithRetry("https://ehs-deploy-sooty.vercel.app/api/staff", {
+                method: "GET",
+            });
             const tableBody = document.querySelector(".staff-table tbody");
             const noDataRow = document.getElementById("noDataRow");
             const paginationControls = document.getElementById("paginationControls");
@@ -364,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${startIndex + index + 1}</td>
                         <td>
                             <div class="staff-name">
-                                ${s.image ? `<img src="https://ehs-deploy.vercel.app/${s.image}" alt="${s.name}" class="staff-image">` : ''}
+                                ${s.image ? `<img src="${s.image}" alt="${s.name}" class="staff-image">` : ''}
                                 <span>${s.name}</span>
                             </div>
                         </td>
@@ -387,12 +421,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".edit-button").forEach(button => {
                     button.addEventListener("click", function () {
                         const staffId = button.getAttribute("data-id");
-                        fetchWithRetry(`https://ehs-deploy.vercel.app/api/staff/${staffId}`)
+                        fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/staff/${staffId}`, {
+                            method: "GET",
+                        })
                             .then(staff => {
                                 openEditOverlay(staff);
                             })
                             .catch(error => {
-                                showAlert(error.message || "Failed to load staff data");
+                                showAlert(error.message || "Failed to load staff data", { isError: true });
                             });
                     });
                 });
@@ -400,27 +436,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".delete-button").forEach(button => {
                     button.addEventListener("click", function () {
                         const staffId = button.getAttribute("data-id");
-                        showAlert("Are you sure you want to delete this staff?", () => {
-                            fetchWithRetry(`https://ehs-deploy.vercel.app/api/delete-staff/${staffId}`, {
-                                method: "DELETE",
-                            })
-                                .then(data => {
-                                    showAlert(data.message || "Staff deleted successfully", () => {
-                                        if (filteredStaff.length - 1 <= (currentPage - 1) * staffPerPage) {
-                                            currentPage = Math.max(1, currentPage - 1);
-                                        }
-                                        fetchStaff(searchQuery);
-                                    });
+                        showAlert("Are you sure you want to delete this staff?", {
+                            isConfirm: true,
+                            onConfirm: () => {
+                                fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/delete-staff/${staffId}`, {
+                                    method: "DELETE",
                                 })
-                                .catch(error => {
-                                    showAlert(error.message || "Failed to delete staff");
-                                });
+                                    .then(data => {
+                                        showAlert(data.message || "Staff deleted successfully", {
+                                            onConfirm: () => {
+                                                if (filteredStaff.length - 1 <= (currentPage - 1) * staffPerPage) {
+                                                    currentPage = Math.max(1, currentPage - 1);
+                                                }
+                                                fetchStaff(searchQuery);
+                                            }
+                                        });
+                                    })
+                                    .catch(error => {
+                                        showAlert(error.message || "Failed to delete staff", { isError: true });
+                                    });
+                            }
                         });
                     });
                 });
             }
         } catch (error) {
-            showAlert(error.message || "Error fetching staff");
+            showAlert(error.message || "Error fetching staff", { isError: true });
         } finally {
             isFetching = false;
         }
@@ -429,22 +470,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // Reset Password Button
     document.getElementById("resetPasswordBtn").addEventListener("click", function () {
         if (!currentStaffId) {
-            alert("No staff selected for password reset");
+            showAlert("No staff selected for password reset", { isError: true });
             return;
         }
 
-        const confirmed = confirm("Are you sure you want to reset this staff's password?");
-        if (confirmed) {
-            fetchWithRetry(`https://ehs-deploy.vercel.app/api/reset-staff-password/${currentStaffId}`, {
-                method: "POST",
-            })
-                .then(data => {
-                    alert(data.message || "Password reset successfully");
+        showAlert("Are you sure you want to reset this staff's password?", {
+            isConfirm: true,
+            onConfirm: () => {
+                fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/reset-staff-password/${currentStaffId}`, {
+                    method: "POST",
                 })
-                .catch(error => {
-                    alert(error.message || "Failed to reset password");
-                });
-        }
+                    .then(data => {
+                        showAlert(data.message || "Password reset successfully");
+                    })
+                    .catch(error => {
+                        showAlert(error.message || "Failed to reset password", { isError: true });
+                    });
+            }
+        });
     });
 
     // Update pagination controls

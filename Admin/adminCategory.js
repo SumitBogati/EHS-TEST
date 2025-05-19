@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("image", categoryImage);
         }
 
-        fetchWithRetry("https://ehs-deploy.vercel.app/api/add-category", {
+        fetchWithRetry("https://ehs-deploy-sooty.vercel.app/api/add-category", {
             method: "POST",
             body: formData,
         })
@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("image", categoryImage);
         }
 
-        fetchWithRetry(`https://ehs-deploy.vercel.app/api/update-category/${currentCategoryId}`, {
+        fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/update-category/${currentCategoryId}`, {
             method: "PUT",
             body: formData,
         })
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isFetching = true;
 
         try {
-            const categories = await fetchWithRetry("https://ehs-deploy.vercel.app/api/categories", {
+            const categories = await fetchWithRetry("https://ehs-deploy-sooty.vercel.app/api/categories", {
                 method: "GET",
             });
             const tableBody = document.querySelector(".categories-table tbody");
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".edit-button").forEach(button => {
                     button.addEventListener("click", function () {
                         const categoryId = button.getAttribute("data-id");
-                        fetchWithRetry(`https://ehs-deploy.vercel.app/api/category/${categoryId}`, {
+                        fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/category/${categoryId}`, {
                             method: "GET",
                         })
                             .then(category => {
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     button.addEventListener("click", function () {
                         const categoryId = button.getAttribute("data-id");
                         if (confirm("Are you sure you want to delete this category?")) {
-                            fetchWithRetry(`https://ehs-deploy.vercel.app/api/delete-category/${categoryId}`, {
+                            fetchWithRetry(`https://ehs-deploy-sooty.vercel.app/api/delete-category/${categoryId}`, {
                                 method: "DELETE",
                             })
                                 .then(data => {

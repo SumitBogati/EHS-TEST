@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Fetch staff-specific bookings from the server
     async function fetchBookings() {
         try {
-            const response = await fetch(`https://ehs-deploy.vercel.app/api/bookings/staff/${userId}`);
+            const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/staff/${userId}`);
 
             if (!response.ok) {
                 throw new Error(`Failed to fetch bookings: ${response.status}`);
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const newStatus = event.target.value;
 
             try {
-                const response = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${bookingId}/status`, {
+                const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${bookingId}/status`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -325,7 +325,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             // Reschedule booking if date and time slot are provided
             if (newDate && newTimeSlot) {
-                const rescheduleResponse = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${bookingId}/reschedule`, {
+                const rescheduleResponse = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${bookingId}/reschedule`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

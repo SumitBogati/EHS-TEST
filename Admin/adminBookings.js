@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Fetch all bookings from server
     async function fetchBookings() {
         try {
-            const response = await fetch('https://ehs-deploy.vercel.app/api/bookings');
+            const response = await fetch('https://ehs-deploy-sooty.vercel.app/api/bookings');
             if (!response.ok) {
                 throw new Error('Failed to fetch bookings');
             }
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else if (event.target.closest('.delete-button')) {
             if (confirm('Are you sure you want to delete this booking?')) {
                 try {
-                    const response = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${bookingId}`, {
+                    const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${bookingId}`, {
                         method: 'DELETE',
                     });
                     if (!response.ok) {
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const newStatus = event.target.value;
 
             try {
-                const response = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${bookingId}/status`, {
+                const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${bookingId}/status`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: newStatus }),
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             // Reschedule if date and time slot provided
             if (newDate && newTimeSlot) {
-                const rescheduleResponse = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${bookingId}/reschedule`, {
+                const rescheduleResponse = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${bookingId}/reschedule`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ newDate, newTimeSlot }),

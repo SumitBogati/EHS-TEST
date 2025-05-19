@@ -48,7 +48,7 @@ async function fetchUserBookings() {
     const userId = localStorage.getItem('userId'); // Get user ID from local storage
     try {
         // Fetch bookings from the backend using the user's ID
-        const response = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${userId}`);
+        const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${userId}`);
         const bookings = await response.json();
 
         const bookingsList = document.querySelector(".bookings-list");
@@ -87,7 +87,7 @@ async function fetchUserBookings() {
 // Function to fetch the user's first name from the backend
 async function fetchUserDetails(userId) {
     try {
-        const response = await fetch(`https://ehs-deploy.vercel.app/api/users/${userId}`);
+        const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/users/${userId}`);
         const user = await response.json();
         return user.firstName;
     } catch (error) {
@@ -130,7 +130,7 @@ function displayBookings(bookings) {
         const bookingCard = document.createElement("div");
         bookingCard.classList.add("booking-card");
         bookingCard.setAttribute('data-id', booking.id); 
-        const imageUrl = `https://ehs-deploy.vercel.app/${booking.service.image}`;
+        const imageUrl = `https://ehs-deploy-sooty.vercel.app/${booking.service.image}`;
         const serviceImage = document.createElement("img");
         serviceImage.src = imageUrl;
         serviceImage.alt = "Service Image";
@@ -196,7 +196,7 @@ function displayBookings(bookings) {
             if (result.isConfirmed) {
                 try {
                     // Send PUT request to update the booking status to 'cancelled'
-                    const response = await fetch(`https://ehs-deploy.vercel.app/api/bookings/${booking.id}/status`, {
+                    const response = await fetch(`https://ehs-deploy-sooty.vercel.app/api/bookings/${booking.id}/status`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ status: 'cancelled' }), // Sending the status change in the body
@@ -332,7 +332,7 @@ function openOverlay(booking) {
     document.getElementById('overlay').style.display = 'flex';
 
     // Set staff image
-    document.getElementById('overlayStaffImage').src = `https://ehs-deploy.vercel.app/${booking.staff.image}`;
+    document.getElementById('overlayStaffImage').src = `https://ehs-deploy-sooty.vercel.app/${booking.staff.image}`;
 
     // Set staff details
     document.getElementById('overlayStaffName').textContent = `Staff Name: ${booking.staff.name}`;
