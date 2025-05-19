@@ -31,8 +31,8 @@
         <aside class="sidebar">
             <nav class="nav">
                 <ul>
-                    <li><a href="Staff/staffDashboard.html" class="menu-item"><i class="fa-solid fa-bookmark icon"></i>Bookings</a></li>
-                    <li><a href="Staff/staffProfile.html" class="menu-item"><i class="fa fa-user icon"></i> Profile</a></li>
+                    <li><a href="staffDashboard.html" class="menu-item"><i class="fa-solid fa-bookmark icon"></i>Bookings</a></li>
+                    <li><a href="staffProfile.html" class="menu-item"><i class="fa fa-user icon"></i> Profile</a></li>
                     <li><a href="#" id="logout-link" class="menu-item"><i class="fa fa-sign-out-alt icon"></i> Logout</a></li>
                 </ul>
             </nav>
@@ -196,7 +196,7 @@
 
         // Fetch staff details to show name in header
         try {
-            const response = await fetch(`http://localhost:3000/api/staff/${userId}`);
+            const response = await fetch(`http://localhost:3000/api/${userId}`);
             const data = await response.json();
 
             if (response.ok) {

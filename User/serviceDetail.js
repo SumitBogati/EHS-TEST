@@ -341,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmButtonText: "OK"
             }).then(() => {
                 // Redirect to userBooking.html after clicking OK
-                window.location.href = "User/userBookings.html";
+                window.location.href = "userBookings.html";
             });
         }, 500);
     } else if (paymentStatus === "failed") {
@@ -353,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmButtonText: "OK"
             }).then(() => {
                 // Redirect to userBooking.html even on failure
-                window.location.href = "User/userBookings.html";
+                window.location.href = "userBookings.html";
             });
         }, 500);
     }

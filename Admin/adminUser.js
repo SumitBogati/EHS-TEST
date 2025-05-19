@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Delete User Function
     function deleteUser(userId) {
         if (confirm("Are you sure you want to delete this user?")) {
-            fetch(`https://ehs-deploy.vercel.app/api/delete-user/${userId}`, {
+            fetch(`https://ehs-deploy.vercel.app/api/delete-${userId}`, {
                 method: "DELETE",
             })
                 .then(response => response.json())
