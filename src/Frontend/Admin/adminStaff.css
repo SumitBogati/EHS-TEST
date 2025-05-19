@@ -1,0 +1,448 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Header Styling */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px 2%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+h2 {
+    font-size: 20px;
+    color: #000000;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    font-size: 20px;
+    color: #000;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 16px;
+    color: #000;
+}
+
+/* Sidebar Styling */
+
+.content-container {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: white;
+    color: #1A73E8;
+    height: 100%;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav ul {
+    list-style: none;
+}
+
+.nav ul li {
+    margin: 10px 0;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.nav ul li a .icon {
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.nav ul li a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.nav ul li a.active {
+    background-color: #1A73E8;
+    color: white;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Staff Section */
+.staff-box {
+    color: #333333;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Header Row Styling */
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 5px 3%;
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-input {
+    width: 500px;
+    padding: 8px 12px 8px 40px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+}
+
+.search-input:focus {
+    border-color: #5b5b5b;
+}
+
+.add-staff-button {
+    background-color: #1A73E8;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.add-staff-button:hover {
+    background-color: #0056b3;
+}
+
+.overlay-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Table Styling */
+.table-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px 3%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.staff-table thead tr {
+    background-color: #e9e8e8;
+}
+
+.staff-table th,
+.staff-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.staff-table th:nth-child(1),
+.staff-table td:nth-child(1) {
+    width: 10%;
+}
+
+.staff-table th:nth-child(2),
+.staff-table td:nth-child(2) {
+    width: 25%;
+}
+
+.staff-table .staff-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.staff-table .staff-image {
+    width: 90px;
+    height: 70px;
+    border-radius: 8px;
+    flex-shrink: 0; 
+}
+
+.staff-table .staff-name span {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+    flex-grow: 1;
+    min-width: 120px;
+}
+
+/* Buttons styling */
+.actions-container {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.edit-button,
+.delete-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100px;
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #1A73E8;
+    color: white;
+    margin-right: 5px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #E81A1A;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c9302c;
+}
+
+/* Add Staff Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay-content {
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.3s ease 0.1s;
+}
+
+.overlay.active .overlay-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.overlay-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
+    max-height: 90vh;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;  
+}
+
+
+/* Overlay Header */
+.overlay-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.overlay-logo-container {
+    margin-right: 10px;
+}
+
+.overlay-logo {
+    width: 40px;
+}
+
+.overlay-brand-name {
+    font-size: 20px;
+    color: #000000;
+    font-weight: 600;
+}
+
+/* Overlay Title */
+.overlay-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Add Staff Form */
+.add-staff-form .form-group,
+.edit-staff-form .form-group {
+    margin-bottom: 20px;
+}
+
+.add-staff-form .form-group label,
+.edit-staff-form .form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.add-staff-form .form-group input,
+.add-staff-form .form-group select,
+.edit-staff-form .form-group input,
+.edit-staff-form .form-group select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.add-staff-form .form-group input,.edit-staff-form .form-group input [type="file"] {
+    padding: 10px;
+}
+
+/* Image preview inside the overlay */
+#staff-image-preview {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Form Action Buttons */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reset-password-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #E81A1A;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.reset-password-button:hover {
+    background-color: #c9302c;
+}
+
+.submit-button,
+.cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1A73E8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 48%;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.cancel-button {
+    background-color: #E81A1A;
+}
+
+.cancel-button:hover {
+    background-color: #c9302c;
+}
+
+/* Pagination button */
+.pagination-btn {
+    background-color: #1A73E8;
+    color: #ffffff;
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination-btn:disabled {
+    background-color: #ececec;
+    color: #858585;
+    cursor: not-allowed;
+}
+
+.pagination-btn:hover {
+    background-color: #0056b3;
+}

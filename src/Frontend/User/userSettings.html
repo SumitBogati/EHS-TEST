@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+    <link rel="stylesheet" href="userSettings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username">User</span>
+            <div class="dropdown">
+                <button class="dropdown-btn">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/src/Frontend/User/userService.html">Home</a>
+                    <a href="/src/Frontend/User/userBookings.html">My Bookings</a>
+                    <a href="#" id="logout-link">Logout</a>
+                </div>
+            </div>            
+        </div>
+    </header>
+
+    <div class="settings-page">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Settings</h3>
+           <ul>
+                <li class="active"><i class="fa-solid fa-user"></i> Profile</li>
+                <li><i class="fa-solid fa-lock"></i> Security</li>
+                <li><i class="fa-solid fa-headset"></i> Support</li>
+                <li><i class="fa-solid fa-shield-halved"></i> Privacy Policy</li>
+            </ul>
+        </aside>
+
+        <!-- Settings Content -->
+        <main class="settings-container">
+            <div id="profile-settings">
+                <h2>Profile Settings</h2>
+            <form class="settings-form">
+                <div class="form-group name-group">
+                    <div class="input-box">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first-name" placeholder="First name">
+                    </div>
+                    <div class="input-box">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Phone number">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" placeholder="Address">
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+            </div>
+            <div id="security-settings" style="display: none;">
+                <h2>Change Password</h2>
+                <form class="password-form">
+                    <div class="password-field">
+                        <label for="old-password">Old Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="old-password" />
+                            <i class="fa-solid fa-eye toggle-password" data-target="old-password"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="password-field">
+                        <label for="new-password">New Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="new-password" />
+                            <i class="fa-solid fa-eye toggle-password" data-target="new-password"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="password-field">
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirm-password" />
+                            <i class="fa-solid fa-eye toggle-password" data-target="confirm-password"></i>
+                        </div>
+                    </div>                    
+                    <button type="submit" class="save-btn">Change Password</button>
+                </form>
+            </div> 
+            <div id="support-settings" class="settings-panel" aria-hidden="true" hidden>
+                <div class="settings-content">
+                    <h2 class="settings-title">Customer Support Center</h2>
+                    <div class="settings-body">
+                        <p>At EasyHome Services, we prioritize your satisfaction and are committed to providing exceptional support. Our dedicated customer care team is standing by to assist you with any questions, technical issues, or service inquiries you may have. Whether you need help with your current service, have questions about our offerings, or require assistance with your account, we're here to help.</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="icon icon-email" aria-hidden="true"></i>
+                                <div class="contact-details">
+                                    <h3 class="contact-method-title">Email Support</h3>
+                                    <p>For non-urgent inquiries or detailed questions, please email us at:</p>
+                                    <a href="mailto:support@easyhomeservices.com" class="contact-link">
+                                        support@easyhomeservices.com
+                                    </a>
+                                    <p class="response-time">We typically respond within 1-2 hours.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="icon icon-phone" aria-hidden="true"></i>
+                                <div class="contact-details">
+                                    <h3 class="contact-method-title">Phone Support</h3>
+                                    <p>For immediate assistance, please call our support hotline:</p>
+                                    <a href="tel:9876543210" class="contact-link">
+                                        +977 9876543210
+                                    </a>
+                                    <p class="response-time">Direct line to our customer service representatives</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="support-hours"><strong>Standard Support Hours:</strong> Monday-Friday, 9:00 AM to 5:00 PM (Nepal Standard Time).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="privacy-settings" class="settings-panel" aria-hidden="true" hidden>
+                <div class="settings-content">
+                    <h2 class="settings-title">Our Privacy Commitment</h2>
+                    <div class="settings-body">
+                        <p>At EasyHome Services, we understand that your personal information deserves the highest level of protection. Our comprehensive privacy policy reflects our unwavering commitment to safeguarding your data and maintaining your trust.</p>
+                        
+                        <div class="privacy-section">
+                            <h3>Information Collection</h3>
+                            <p>We only collect information that is necessary to provide you with our services, including:</p>
+                            <ul class="privacy-points">
+                                <li>Basic contact details to establish communication</li>
+                                <li>Service-related information to fulfill your requests</li>
+                                <li>Minimal payment information processed through secure channels</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="privacy-section">
+                            <h3>Data Protection</h3>
+                            <p>We implement robust security measures to protect your information:</p>
+                            <ul class="privacy-points">
+                                <li>Standard encryption for some data transmissions</li>
+                                <li>Limited employee access to sensitive information</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="privacy-section">
+                            <h3>Your Privacy Rights</h3>
+                            <p>You maintain complete control over your personal data:</p>
+                            <ul class="privacy-points">
+                                <li>Right to access and review your stored information</li>
+                                <li>Right to request corrections to inaccurate data</li>
+                                <li>Right to request deletion of your personal data</li>
+                            </ul>
+                        </div>
+                                    
+                        <div class="privacy-contact">
+                            <p>If you have any privacy-related concerns or questions, please contact our customer service department at: <a href="mailto:support@easyhomeservices.com" class="contact-link">support@easyhomeservices.com</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const dropdownButton = document.querySelector('.dropdown-btn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            const usernameSpan = document.querySelector('.username'); // Get the username span
+    
+            const userId = localStorage.getItem('userId');
+    
+            if (userId) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+                    const userData = await response.json();
+    
+                    if (response.ok) {
+                        usernameSpan.textContent = userData.firstName || 'User'; // Update the username
+                    } else {
+                        console.error("Error fetching user data:", userData.error);
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch user data:", error);
+                }
+            }
+    
+            // Toggle dropdown
+            dropdownButton.addEventListener('click', function (event) {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
+    
+            // Close dropdown when clicking outside
+            window.addEventListener('click', function (event) {
+                if (!event.target.matches('.dropdown-btn') && !event.target.matches('.fa-ellipsis-vertical')) {
+                    var dropdowns = document.getElementsByClassName('dropdown-content');
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            });
+        });
+    </script>   
+    <script src="userSettings.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="staffDashboard.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Staff Bookings</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="booking-box">
+            <p>Bookings</p>
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username" id="staffName">Staff</span>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="/src/Frontend/Staff/staffDashboard.html" class="menu-item"><i class="fa-solid fa-bookmark icon"></i>Bookings</a></li>
+                    <li><a href="/src/Frontend/Staff/staffProfile.html" class="menu-item"><i class="fa fa-user icon"></i> Profile</a></li>
+                    <li><a href="#" id="logout-link" class="menu-item"><i class="fa fa-sign-out-alt icon"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Bookings Table -->
+            <div class="table-container">
+                <div class="header-row">
+                    <div class="search-container">
+                        <i class="fa fa-search search-icon"></i>
+                        <input type="text" placeholder="Search Bookings..." class="search-input" id="searchInput">
+                    </div>
+                    <!-- Filter dropdown -->
+                    <select class="status-filter-dropdown" id="statusFilterDropdown">
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="inprogress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Service</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Time Slot</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                    </tbody>
+                </table>
+                <!-- Image when there is no data in table -->
+                <div id="noDataRow">
+                    <img src="/Image/404-error.svg" alt="No Data" style="width: 430px; margin-left: 32%;"/>
+                    <p style="font-weight: bold; font-size: 16px; text-align: center;">No bookings available</p>
+                </div>
+
+                <!-- Booking Pagination Controls -->
+                <div class="pagination" id="bookingPaginationControls" style="display: none;">
+                    <button id="bookingPrevBtn" class="pagination-btn" disabled>Previous</button>
+                    <span id="bookingPageNumber"></span>
+                    <button id="bookingNextBtn" class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Booking Overlay -->
+    <div id="editBookingOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <div class="overlay-logo-container">
+                    <img src="/Image/logo.png" alt="Logo" class="overlay-logo">
+                </div>
+                <p class="overlay-brand-name">EasyHomeServices</p>
+            </div>
+            <h1 class="overlay-title">Edit Booking</h1>
+            <form action="" method="post" class="edit-booking-form" id="editBookingForm">
+                <div class="form-group">
+                    <label for="edit-booking-service">Service Name</label>
+                    <input type="text" id="edit-booking-service" name="service" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-booking-user">User Name</label>
+                    <input type="text" id="edit-booking-user" name="user" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-booking-date">Select Date</label>
+                    <select id="edit-booking-date" name="date" required>
+                        <option value="">Select Date</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-booking-time">Select Time Slot</label>
+                    <select id="edit-booking-time" name="time" required>
+                        <option value="">Select Time Slot</option>
+                        <option value="8AM - 9AM">8AM - 9AM</option>
+                        <option value="9AM - 10AM">9AM - 10AM</option>
+                        <option value="10AM - 11AM">10AM - 11AM</option>
+                        <option value="11AM - 12PM">11AM - 12PM</option>
+                        <option value="12PM - 1PM">12PM - 1PM</option>
+                        <option value="1PM - 2PM">1PM - 2PM</option>
+                        <option value="2PM - 3PM">2PM - 3PM</option>
+                        <option value="3PM - 4PM">3PM - 4PM</option>
+                        <option value="4PM - 5PM">4PM - 5PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-booking-status">Booking Status</label>
+                    <select id="edit-booking-status" name="status" disabled>
+                        <option value="">Select Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="inprogress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-booking-price">Service Price</label>
+                    <input type="number" id="edit-booking-price" name="price" disabled>
+                </div>
+                <div class="form-group" style="display: none;">
+                    <input type="hidden" id="edit-booking-id" name="bookingId">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="editBookingCancelBtn">Cancel</button>
+                    <button type="submit" class="submit-button">Update Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const currentPage = window.location.pathname.split("/").pop();
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            if (item.getAttribute('href').includes(currentPage)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(".status-dropdown").change(function () {
+                var selectedStatus = $(this).val();
+                $(this).removeClass("pending inprogress completed cancelled");
+                $(this).addClass(selectedStatus);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", async function () {
+        const userId = localStorage.getItem("userId");
+        const userRole = localStorage.getItem("userRole");
+        const token = localStorage.getItem("token");
+
+        // Redirect if unauthorized
+        if (!token || !userId || userRole !== "staff") {
+            Swal.fire({
+                icon: "warning",
+                title: "Unauthorized Access",
+                text: "Please login as a staff member to continue.",
+                confirmButtonText: "OK"
+            }).then(() => {
+                window.location.href = "/src/Frontend/index.html";
+            });
+            return;
+        }
+
+        // Fetch staff details to show name in header
+        try {
+            const response = await fetch(`http://localhost:3000/api/staff/${userId}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                document.getElementById("staffName").textContent = data.name || "Staff";
+            } else {
+                console.error("Failed to fetch staff data");
+            }
+        } catch (err) {
+            console.error("Error fetching staff:", err);
+        }
+    });
+
+    </script>
+
+    <script src="staffDashboard.js"></script>
+</body>
+</html>

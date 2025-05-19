@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <!-- link for swiperJS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <!-- link for sweet alert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>EasyHomeServices</title>
+</head>
+<body>
+    <!------------------------------------------------- Navbar Section --------------------------------------------------->
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Company Logo" class="logo">
+            <span class="company-name">EasyHomeServices</span>
+        </div>
+
+        <div class="hamburger-icon" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <nav class="nav-links">
+            <div class="hamburger-icon close-icon" onclick="toggleMenu()">
+                <i class="fas fa-times"></i>
+            </div>
+            
+            <a href="#header">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact Us</a>
+            <button class="login-button" onclick="toggleOverlay('login')">
+                Login <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>            
+        </nav>
+    </header>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-container">
+            <span class="close-btn" onclick="toggleOverlay('login')"><i class="fa-solid fa-x"></i></span>
+            <div class="logo-container">
+                <img src="/Image/logo.png" alt="EasyHomeServices Logo" class="login-logo">
+                <span class="company-name">EasyHomeServices</span>
+            </div>
+            <h2>Login to Your Account</h2>
+            <p>Enter your credentials to access your account</p>
+            <form action="#" method="post" onsubmit="return validateLogin()">
+                <div class="form-group">
+                    <label for="login-identifier">Email</label>
+                    <input type="text" id="login-email" placeholder="example@example.com" class="form-input" required>
+                </div>
+                <div class="form-group password-container">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Password" class="form-input" required>
+                    <i class="fa-solid fa-eye" id="login-eye" onclick="togglePassword('login')"></i>
+                </div>
+                <a href="../Frontend/forgetPassword.html" class="forgot-password">Forgot password?</a>
+                <button type="submit" class="login-btn">Login</button>
+                <div class="signup-prompt">
+                    <p>Don't have an account? <a href="#" class="signup-link" onclick="toggleOverlay('signup')">Signup</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   <!-- Signup Overlay -->
+    <div id="signup-overlay" class="signup-overlay">
+        <div class="signup-container">
+            <span class="close-btn" onclick="toggleOverlay('login')"><i class="fa-solid fa-x"></i></span>
+            <h2>Account Signup</h2>
+            <p>Fill in the details to create your account</p>
+            <form action="#" method="post">
+                <div class="form-group name-container">
+                    <div class="name-field">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" placeholder="First Name" class="form-input" required>
+                    </div>
+                    <div class="name-field">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" placeholder="Last Name" class="form-input" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="example@example.com" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" placeholder="Phone Number" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-address">Address</label>
+                    <input type="text" id="signup-address" placeholder="Address" class="form-input" required>
+                </div>
+                <div class="form-group password-container">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Password" class="form-input" required>
+                    <i class="fa-solid fa-eye" id="signup-eye" onclick="togglePassword('signup')"></i>
+                </div>
+                <div class="form-group password-container">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" class="form-input" required>
+                    <i class="fa-solid fa-eye" id="signup-confirm-eye" onclick="togglePassword('signup-confirm')"></i>
+                </div>
+                <button type="submit" class="signup-btn">Sign Up</button>
+                <div class="login-prompt">
+                    <p>Already have an account? <a href="#" class="login-link" onclick="toggleOverlay('login')">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Verification Overlay -->
+    <div id="verification-overlay" class="verification-overlay">
+        <div class="verification-container">
+            <span class="close-btn" onclick="toggleOverlay('verification')"><i class="fa-solid fa-x"></i></span>
+            <div class="content-wrapper">
+                <div class="image-container">
+                    <img src="/Image/email-campaign-animate.svg" alt="Left Side Image">
+                </div>
+                <div class="vertical-line"></div>
+                <div class="verification-content">
+                    <h2>Verify Your Email</h2>
+                    <p>Please enter the verification code sent to your email</p>
+                    <form action="#" method="post" id="verification-form">
+                        <div class="form-group">
+                            <label for="verification-code">Verification Code</label>
+                            <input type="text" id="verification-code" placeholder="Enter code" class="form-input" required>
+                        </div>
+                        <button type="submit" class="verification-btn">Verify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------- Header Section --------------------------------------------------->
+    <div id="header">
+        <div class="header-content">
+            <div class="header-text">
+                <h3>Keep Your Home in Expert Hands with Our Skilled Professionals</h3>
+                <p>Whether it's repairs, renovations, or routine maintenance, our skilled professionals are here to make home care effortless and worry-free. We deliver top-quality service with a focus on your satisfaction, every time. Trust us to keep your home in expert hands.</p>
+                <button class="header-button"> 
+                <i class="fa-solid fa-phone"></i> Book Now 
+            </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us Section -->
+    <div id="about" class="about-us">
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Home Services: Transforming Your Space with Expert Care and Attention</h3>
+                <p>At EasyHomeServices, we offer a full spectrum of professional home services designed to enhance the look and function of your home. Whether it's small repairs, room updates, or large-scale renovations, our skilled team is committed to bringing your ideas to life with precision and care. We pride ourselves on providing exceptional results, delivered on time and within budget, so you can enjoy the transformation without the stress. Our experts work closely with you at every step to ensure your needs are met, and your expectations exceeded. From start to finish, EasyHomeServices handles your home with professionalism, delivering quality, trust, and peace of mind. Let us transform your space into the home you've always dreamed of.</p>
+                <button class="call-us-button"> <i class="fa-solid fa-phone"></i> Contact us now </button>
+            </div>
+            <div class="about-image">
+                <img src="/Image/Repair.jpg" alt="Expert Care" class="about-img">
+            </div>
+        </div>
+    </div>
+
+    <!--------------------------------------------------- Services Section --------------------------------------------------->
+    
+    <div id= "services" class="service-section swiper">
+        <h2 class="section-heading">Our Services</h2> 
+        <div class="card-wrappper">
+            <ul class="card-list swiper-wrapper">
+                <li class="card-item swiper-slide">
+                    <div class="card-link">
+                        <img src="/Image/service images/plumbing.jpg" alt="Card-Image" class="card-image">
+                        <p class="badge">Plumbing</p>
+                        <p class="card-title">Reliable plumbing services to keep your home in perfect working order, fixing leaks, blockages, and more.</p>
+                        <button class="book-now-button">Book Now</button>
+                    </div>
+                </li>
+                
+                <li class="card-item swiper-slide">
+                    <div class="card-link">
+                        <img src="/Image/service images/cleaning.jpg" alt="Card-Image" class="card-image">
+                        <p class="badge">Cleaning</p>
+                        <p class="card-title">Thorough cleaning services that make your home sparkle, from regular upkeep to deep cleans.</p>
+                        <button class="book-now-button">Book Now</button>
+                    </div>
+                </li>
+                <li class="card-item swiper-slide">
+                    <div class="card-link">
+                        <img src="/Image/service images/carpenting.jpg" alt="Card-Image" class="card-image">
+                        <p class="badge">Carpenting</p>
+                        <p class="card-title">Expert carpentry for custom furniture, repairs, and home improvements that fit your style.</p>
+                        <button class="book-now-button">Book Now</button>
+                    </div>
+                </li>
+                <li class="card-item swiper-slide">
+                    <div class="card-link">
+                        <img src="/Image/service images/Maintenance.jpg" alt="Card-Image" class="card-image">
+                        <p class="badge">Maintenance</p>
+                        <p class="card-title">Regular maintenance services to ensure everything in your home is running smoothly and efficiently.</p>
+                        <button class="book-now-button">Book Now</button>
+                    </div>
+                </li>
+                <li class="card-item swiper-slide">
+                    <div class="card-link">
+                        <img src="/Image/service images/installation.jpg" alt="Card-Image" class="card-image">
+                        <p class="badge">Installation</p>
+                        <p class="card-title">Professional installation services for appliances, fixtures, and home upgrades to improve your living space.</p>
+                        <button class="book-now-button">Book Now</button>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="swiper-pagination"></div>
+            <!-- <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div> -->
+        </div>
+    </div>
+
+    <!------------------------------------------- How It Works Section ---------------------------------------------------->
+
+    <div id="how-it-works" class="how-it-works">
+        <h2 class="section-heading">How It Works</h2>
+        <div class="steps-container">
+            <div class="step-card">
+                <i class="fas fa-tools step-icon"></i>
+                <h3>Find a Service</h3>
+                <p>Explore a variety of professional home services tailored to your needs. From repairs and maintenance to cleaning and installations, everything is easy to find and ready for you to book.</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-calendar-alt step-icon"></i>
+                <h3>Book Easily</h3>
+                <p>With a few clicks, select your service, pick a time that works for you, and confirm your appointment. The process is quick, easy, and hassle-free.</p>
+            </div>
+            <div class="step-card">
+                <i class="fa-solid fa-face-smile-wink step-icon"></i>
+                <h3>Relax</h3>
+                <p>Let our skilled professionals handle the job with precision and care. Enjoy the peace of mind that comes with exceptional service and a stress-free experience.</p>
+            </div>
+        </div>
+    </div>
+
+<!------------------------------------------------------ Contact Us -------------------------------------------------------->
+
+    <div id="contact">
+        <div class="contact-us">
+            <div class="row">
+                <div class="contact-left">
+                    <h1 class="sub-title">Contact Us</h1>
+                    <p><i class="fa-solid fa-envelope contact-icon"></i> support@easyhomeservices.com</p>
+                    <p><i class="fa-solid fa-phone contact-icon"></i> 9876543210</p>
+                    <p><i class="fa-solid fa-location-dot contact-icon"></i> Naxal, Kathmandu</p>
+                    <div class="social-icons">
+                        <a href=""><i class="fa-brands fa-facebook"></i></a>
+                        <a href=""><i class="fa-brands fa-instagram"></i></a>
+                        <a href=""><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href=""><i class="fa-brands fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="contact-right">
+                    <form>
+                        <input type="text" name="Name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <textarea name="message" rows="6" placeholder="Your Message"></textarea>
+                        <div class="contact-buttons">
+                            <button type="submit" class="btn btn2">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!------------------------------------------------------ Footer ---------------------------------------------------------->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2025 Easy Home Services. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Linking swiperJs Script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
+    <!------------------------------------- Card Swipper js ---------------------------------------------->
+    <script>
+        new Swiper('.card-wrappper', {
+        loop: true,
+        spaceBetween : 30,
+
+        //pagination Bullet
+        pagination: {
+        el: '.swiper-pagination',
+        clickable : true,
+        dynamicBullets: true
+        },  
+    
+        // Navigation arrows
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+
+        //Responsive breakpoints
+        breakpoints : {
+            0:{
+                slidesPerView : 1
+            },
+            768:{
+                slidesPerView : 2
+            },
+            1024:{
+                slidesPerView : 3
+            },
+        }
+    });
+    </script>
+
+    <!------------------------------- Responsive Bar icons script ------------------------------------->
+    <script>
+        function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        const hamburger = document.querySelector('.hamburger-icon i');
+        
+        // Toggle the active class to show or hide the menu
+        navLinks.classList.toggle('active');
+
+        // Change the hamburger icon to close icon and vice versa
+        if (navLinks.classList.contains('active')) {
+            hamburger.classList.remove('fa-bars');
+            hamburger.classList.add('fa-times'); // Change to close icon
+        } else {
+            hamburger.classList.remove('fa-times');
+            hamburger.classList.add('fa-bars'); // Change back to hamburger icon
+        }
+    }
+
+    </script>
+
+    <script>
+        // Function to open login, signup, or verification overlay
+        function toggleOverlay(type) {
+            const loginOverlay = document.getElementById('login-overlay');
+            const signupOverlay = document.getElementById('signup-overlay');
+            const verificationOverlay = document.getElementById('verification-overlay');
+
+            // Hide all overlays first
+            loginOverlay.style.display = 'none';
+            signupOverlay.style.display = 'none';
+            verificationOverlay.style.display = 'none';
+
+            // Show the appropriate overlay based on the type
+            if (type === 'login') {
+                loginOverlay.style.display = 'flex';
+            } else if (type === 'signup') {
+                signupOverlay.style.display = 'flex';
+            } else if (type === 'verification') {
+                verificationOverlay.style.display = 'flex';
+            }
+        }
+
+        // Close overlay function to hide both login, signup, and verification overlays
+        function closeOverlays() {
+            const loginOverlay = document.getElementById('login-overlay');
+            const signupOverlay = document.getElementById('signup-overlay');
+            const verificationOverlay = document.getElementById('verification-overlay');
+            
+            loginOverlay.style.display = 'none';
+            signupOverlay.style.display = 'none';
+            verificationOverlay.style.display = 'none';
+        }
+
+        // Function to toggle password visibility for login/signup
+        function togglePassword(type) {
+            let passwordField, eyeIcon;
+            
+            // For signup password visibility toggle
+            if (type === 'signup') {
+                passwordField = document.getElementById('signup-password');
+                eyeIcon = document.getElementById('signup-eye');
+            } 
+            // For signup confirm password visibility toggle
+            else if (type === 'signup-confirm') {
+                passwordField = document.getElementById('signup-confirm-password');
+                eyeIcon = document.getElementById('signup-confirm-eye');
+            } 
+            // For login password visibility toggle
+            else if (type === 'login') {
+                passwordField = document.getElementById('login-password');
+                eyeIcon = document.getElementById('login-eye');
+            }
+
+            // Toggle the password field visibility and change the eye icon
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Add event listeners to close buttons to close the respective overlay
+        document.querySelectorAll('.close-btn').forEach(button => {
+            button.addEventListener('click', closeOverlays);
+        });
+
+        // Close overlays when clicking outside the overlay content
+        window.addEventListener('click', function(event) {
+            const loginOverlay = document.getElementById('login-overlay');
+            const signupOverlay = document.getElementById('signup-overlay');
+            const verificationOverlay = document.getElementById('verification-overlay');
+            
+            // Close the overlay if clicking outside of the overlay content area
+            if (event.target === loginOverlay || event.target === signupOverlay || event.target === verificationOverlay) {
+                closeOverlays();
+            }
+        });
+
+        // Function to validate login identifier (email or phone number)
+        function validateLogin() {
+            const identifier = document.getElementById('login-identifier').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^\d{10}$/;
+
+            if (!emailRegex.test(identifier) && !phoneRegex.test(identifier)) {
+                alert("Please enter a valid email or 10-digit phone number.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+
+    <script src="signup.js"></script>
+    <script src="login.js"></script>
+
+</body>
+</html>

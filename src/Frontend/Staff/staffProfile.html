@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/api/placeholder/32/32" alt="Logo">
+    <title>Staff Profile</title>
+    <link rel="stylesheet" href="staffProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username" id="staffName">Staff</span>
+        </div>
+    </header>
+
+    <div class="profile-page">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="/src/Frontend/Staff/staffDashboard.html"><i class="fa-solid fa-bookmark"></i> Bookings</a></li>
+                <li class="active"><a href="/src/Frontend/Staff/staffProfile.html"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="#" id="logout-link"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Profile Content -->
+        <main class="profile-container">
+            <div id="profile-settings">
+                <div class="profile-display">
+                    <!-- Image Section (Left Side) -->
+                    <div class="profile-image-section">
+                        <div class="image-preview">
+                            <div class="image-label">Profile Image</div>
+                            <img id="image-preview" src="/Image/default-staff.png" alt="Profile Image">
+                        </div>
+                    </div>
+                    
+                    <!-- Data Section (Right Side) -->
+                    <div class="profile-data-section">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" value="JohnDoe" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" value="+1 (555) 123-4567" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" value="123 Main Street, Cityville" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" id="category" value="Plumbing" disabled>
+                        </div>
+                        <div class="form-group">
+                            <button id="changePasswordBtn" class="change-password-btn">Change Password</button>
+                        </div>
+                    </div>
+
+                    <!-- Password Modal Overlay -->
+                    <div id="passwordModal" class="modal-overlay hidden">
+                        <div class="modal-content">
+                            <h2>Change Password</h2>
+                            <div class="password-field">
+                                <input type="password" id="oldPassword" placeholder="Old Password">
+                                <i class="fa fa-eye toggle-password" data-target="oldPassword"></i>
+                            </div>
+                            <div class="password-field">
+                                <input type="password" id="newPassword" placeholder="New Password">
+                                <i class="fa fa-eye toggle-password" data-target="newPassword"></i>
+                            </div>
+                            <div class="password-field">
+                                <input type="password" id="confirmPassword" placeholder="Confirm New Password">
+                                <i class="fa fa-eye toggle-password" data-target="confirmPassword"></i>
+                            </div>
+                            <div class="modal-buttons">
+                                <button id="cancelPasswordChange">Cancel</button>
+                                <button id="submitPasswordChange">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="staffProfile.js" ></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="adminPayments.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Admin Payments</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="payments-box">
+            <p>Payments</p>
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username">Admin</span>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <aside class="sidebar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="/src/Frontend/Admin/adminDashboard.html" class="menu-item"><i class="fa fa-tachometer-alt icon"></i> Dashboard</a></li>
+                    <li><a href="/src/Frontend/Admin/adminUser.html" class="menu-item"><i class="fa fa-users icon"></i> Users</a></li>
+                    <li><a href="/src/Frontend/Admin/adminStaff.html" class="menu-item"><i class="fa fa-user-tie icon"></i> Staff</a></li>
+                    <li><a href="/src/Frontend/Admin/adminCategory.html" class="menu-item"><i class="fa fa-th icon"></i> Categories</a></li>
+                    <li><a href="/src/Frontend/Admin/adminService.html" class="menu-item"><i class="fa fa-cogs icon"></i> Services</a></li>
+                    <li><a href="/src/Frontend/Admin/adminBookings.html" class="menu-item"><i class="fa fa-bookmark icon"></i> Bookings</a></li>
+                    <li><a href="/src/Frontend/Admin/adminPayments.html" class="menu-item"><i class="fa fa-credit-card icon"></i> Payments</a></li>
+                    <li><a href="#" id="logout-link" class="menu-item"><i class="fa fa-sign-out-alt icon"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <div class="table-container">
+                <div class="header-row">
+                    <div class="search-container">
+                        <input type="text" placeholder="Search Payments..." class="search-input" id="paymentSearchInput">
+                    </div>
+                    
+                    <div class="right-section">
+                        <div class="filter-section">
+                            <select id="paymentStatusFilter" class="status-filter-dropdown">
+                                <option value="">All Status</option>
+                                <option value="initiated">Initiated</option>
+                                <option value="completed">Completed</option>
+                                <option value="partial">Partial</option>
+                                <option value="refunded">Refunded</option>
+                            </select>
+                            
+                            <div class="date-filter-container">
+                                <input type="date" id="startDateFilter" class="date-input" placeholder="Start Date">
+                                <input type="date" id="endDateFilter" class="date-input" placeholder="End Date">
+                            </div>
+                        
+                            <div class="earnings-display">
+                                <span>Total Earnings: </span>
+                                <span id="totalEarnings">0.00</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <table class="payments-table">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>User Name</th>
+                            <th>Service Name</th>
+                            <th>Date</th>
+                            <th>Paid Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody"></tbody>
+                </table>
+                <div id="noDataRow">
+                    <img src="/Image/404-error.svg" alt="No Data" style="width: 430px; margin-left: 32%;"/>
+                    <p style="font-weight: bold; font-size: 16px; text-align: center;">No Payments available</p>
+                </div>
+                <div class="pagination" id="paymentPaginationControls" style="display: none;">
+                    <button id="paymentPrevBtn" class="pagination-btn" disabled>Previous</button>
+                    <span id="paymentPageNumber"></span>
+                    <button id="paymentNextBtn" class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editPaymentOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <div class="overlay-logo-container">
+                    <img src="/Image/logo.png" alt="Logo" class="overlay-logo">
+                </div>
+                <p class="overlay-brand-name">EasyHomeServices</p>
+            </div>
+            <h1 class="overlay-title">Edit Payment</h1>
+            <form action="" method="post" class="edit-payment-form" id="editPaymentForm">
+                <div class="form-group">
+                    <label for="edit-payment-user">User Name</label>
+                    <input type="text" id="edit-payment-user" name="user" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-payment-service">Service Name</label>
+                    <input type="text" id="edit-payment-service" name="service" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-payment-date">Date</label>
+                    <input type="text" id="edit-payment-date" name="date" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-payment-amount">Paid Amount</label>
+                    <input type="number" id="edit-payment-amount" name="amount" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="edit-payment-status">Payment Status</label>
+                    <select id="edit-payment-status" name="status" required>
+                        <option value="">Select Status</option>
+                        <option value="initiated">Initiated</option>
+                        <option value="completed">Completed</option>
+                        <option value="partial">Partial</option>
+                        <option value="refunded">Refunded</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display: none;">
+                    <input type="hidden" id="edit-payment-id" name="paymentId">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="editPaymentCancelBtn">Cancel</button>
+                    <button type="submit" class="submit-button">Update Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const currentPage = window.location.pathname.split("/").pop();
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            if (item.getAttribute('href').includes(currentPage)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(".status-dropdown").change(function () {
+                var selectedStatus = $(this).val();
+                $(this).removeClass("initiated completed partial refunded");
+                $(this).addClass(selectedStatus);
+            });
+        });
+    </script>
+
+    <script src="adminPayments.js"></script>
+</body>
+</html>

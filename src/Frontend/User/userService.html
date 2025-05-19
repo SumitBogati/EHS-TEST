@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>User Service Section</title>
+    <link rel="stylesheet" href="userService.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="search-container">
+            <i class="fa fa-search search-icon"></i>
+            <input type="text" id="search-input" placeholder="Search services..." />
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username">User</span>
+            <div class="dropdown">
+                <button class="dropdown-btn">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/src/Frontend/User/userBookings.html">My Bookings</a>
+                    <a href="/src/Frontend/User/userSettings.html">Settings</a>
+                    <a href="#" id="logout-link">Logout</a>
+                </div>                
+            </div>            
+        </div>
+    </header>       
+
+    <main class="content-container">
+    <!-- Sidebar Filter Section -->
+    <aside class="filter-section">
+        <h3>Filter by Category</h3>
+        <nav class="filter-nav">
+            <ul id="filter-categories">
+                <!-- Categories will be dynamically populated here -->
+            </ul>
+        </nav>
+    </aside>
+
+        <!-- Services Section -->
+        <section class="services-container-wrapper">
+            <div class="services-container" id="services-container">
+                <!-- Dynamic service cards will be loaded here -->
+            </div>
+            <div id="noDataMessage" class="no-data-message" style="display: none;">
+                <img src="/Image/404-error.svg" alt="No data available" class="no-data-img">
+                <p>No services available for this category.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="userService.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const dropdownButton = document.querySelector('.dropdown-btn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            const usernameSpan = document.querySelector('.username');
+    
+            const userId = localStorage.getItem('userId');
+    
+            if (userId) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+                    const userData = await response.json();
+    
+                    if (response.ok) {
+                        usernameSpan.textContent = userData.firstName || 'User'; // Update the username
+                    } else {
+                        console.error("Error fetching user data:", userData.error);
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch user data:", error);
+                }
+            }
+    
+            // Toggle dropdown
+            dropdownButton.addEventListener('click', function (event) {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
+    
+            // Close dropdown when clicking outside
+            window.addEventListener('click', function (event) {
+                if (!event.target.matches('.dropdown-btn') && !event.target.matches('.fa-ellipsis-vertical')) {
+                    var dropdowns = document.getElementsByClassName('dropdown-content');
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            });
+        });
+    </script>    
+</body>
+</html>

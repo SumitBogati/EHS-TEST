@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="adminDashboard.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username">Admin</span>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <aside class="sidebar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="/src/Frontend/Admin/adminDashboard.html" class="menu-item active"><i class="fa fa-tachometer-alt icon"></i> Dashboard</a></li>
+                    <li><a href="/src/Frontend/Admin/adminUser.html" class="menu-item"><i class="fa fa-users icon"></i> Users</a></li>
+                    <li><a href="/src/Frontend/Admin/adminStaff.html" class="menu-item"><i class="fa fa-user-tie icon"></i> Staff</a></li>
+                    <li><a href="/src/Frontend/Admin/adminCategory.html" class="menu-item"><i class="fa fa-th icon"></i> Categories</a></li>
+                    <li><a href="/src/Frontend/Admin/adminService.html" class="menu-item"><i class="fa fa-cogs icon"></i> Services</a></li>
+                    <li><a href="/src/Frontend/Admin/adminBookings.html" class="menu-item"><i class="fa-solid fa-bookmark icon"></i> Bookings</a></li>
+                    <li><a href="/src/Frontend/Admin/adminPayments.html" class="menu-item"><i class="fa fa-credit-card icon"></i> Payments</a></li>
+                    <li><a href="#" id="logout-link" class="menu-item"><i class="fa fa-sign-out-alt icon"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>    
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Welcome Box -->
+            <div class="welcome-box">
+                <p>Welcome back,</p>
+                <h3>Admin</h3>
+            </div>
+
+            <!-- Stats Boxes -->
+            <div class="stats-container">
+                <div class="stats-box users">
+                    <div class="icon-title">
+                        <i class="fa fa-users icon"></i>
+                        <div class="stats-info">
+                            <p>Total Users</p>
+                            <h4></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-box staff">
+                    <div class="icon-title">
+                        <i class="fa fa-user-tie icon"></i>
+                        <div class="stats-info">
+                            <p>Total Staff</p>
+                            <h4></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-box bookings">
+                    <div class="icon-title">
+                        <i class="fa-solid fa-bookmark icon"></i>
+                        <div class="stats-info">
+                            <p>Total Bookings</p>
+                            <h4></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-box revenue">
+                    <div class="icon-title">
+                        <i class="fa fa-dollar-sign icon"></i>
+                        <div class="stats-info">
+                            <p>Total Revenue</p>
+                            <h4></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            
+            <!-- Transactions and Categories Section -->
+            <div class="transactions-categories">
+                <!-- Recent Transactions Box -->
+                <div class="recent-transactions">
+                    <h3>Recent Transactions</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Transactions will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                    <div class="no-transactions" style="display: none; text-align: center; margin-top: 20px;">
+                        <p style="font-weight: bold; font-size: 16px;">No Recent Transactions Available</p>
+                    </div>
+                    <button class="see-all-btn-transaction">See all</button>
+                </div>
+
+                <!-- Top Booked Services Box -->
+                <div class="top-services">
+                    <h3>Top Booked Services</h3>
+                    <ul id="top-services-list">
+                        <!-- Top services will be inserted here dynamically -->
+                    </ul>
+                    <div class="no-services" style="display: none; text-align: center; margin-top: 20px;">
+                        <p style="font-weight: bold; font-size: 16px;">No Top Booked Services Available</p>
+                    </div>
+                    <button class="see-all-btn">See all Services</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        const currentPage = window.location.pathname.split("/").pop();
+        const menuItems = document.querySelectorAll('.menu-item');
+    
+        menuItems.forEach(item => {
+            if (item.getAttribute('href').includes(currentPage)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    </script>
+
+    <script src="adminDashboard.js"></script>
+</body>
+</html>

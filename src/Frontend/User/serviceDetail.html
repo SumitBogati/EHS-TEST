@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <title>User Service Section</title>
+    <link rel="stylesheet" href="serviceDetail.css">
+    <!-- link for sweet alert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username">User</span>
+            <!-- Dropdown Container -->
+            <div class="dropdown">
+                <button class="dropdown-btn">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/src/Frontend/User/userBookings.html">My Bookings</a>
+                    <a href="/src/Frontend/User/userSettings.html">Settings</a>
+                    <a href="#" id="logout-link">Logout</a>
+                </div>
+            </div>   
+        </div>
+    </header>
+
+    <div class="service-detail-container">
+        <!-- Left Section (Service Information) -->
+        <div class="left-section">
+            <h2 class="service-name">Tap Repair</h2>
+            <p class="service-category">plumbing</p>
+            <img src="/Image/service images/plumbing.jpg" alt="Service Image" class="service-image">
+            <p class="service-description"> </p>
+        </div>
+
+        <!-- Right Section (Booking Form) -->
+        <div class="right-section">
+            <h2 class="book-service">Book a Service</h2>
+
+            <div class="price-info">
+                <p class="service-price">Rs. 500.00 / Hour</p>
+                <p class="price-description">
+                    ** This service has a fixed base price. If the service time is updated, an additional Rs.500 per hour will be added to the final amount.
+                  </p>
+            </div>
+
+            <div class="date-picker">
+                <h3>Select Date</h3>
+                <div class="current-date" id="current-date"></div>
+                <div class="date-grid" id="date-grid"></div>
+            </div>            
+
+            <div class="time-picker">
+                <h3>Choose a time period</h3>
+                <div class="time-options">
+                    <button class="time-slot">8AM - 9AM</button>
+                    <button class="time-slot">9AM - 10AM</button>
+                    <button class="time-slot">10AM - 11AM</button>
+                    <button class="time-slot">11AM - 12PM</button>
+                    <button class="time-slot">12PM - 1PM</button>
+                    <button class="time-slot">1PM - 2PM</button>
+                    <button class="time-slot">2PM - 3PM</button>
+                    <button class="time-slot">3PM - 4PM</button>
+                    <button class="time-slot">4PM - 5PM</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="staff-dropdown">Select Available Staff</label>
+                <select id="staff-dropdown" class="form-control">
+                    <!-- Staff options will be populated here -->
+                </select>
+            </div>                    
+
+            <button class="book-button">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Payment Overlay Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Payment Method</h2>
+            <img src="/Image/khalti_logo.png" alt="Payment Methods" class="payment-image">
+            <button class="confirm-payment">Proceed to Pay</button>
+        </div>
+    </div>
+
+    <script src="serviceDetail.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const dropdownButton = document.querySelector('.dropdown-btn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            const usernameSpan = document.querySelector('.username'); // Get the username span
+    
+            const userId = localStorage.getItem('userId');
+    
+            if (userId) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+                    const userData = await response.json();
+    
+                    if (response.ok) {
+                        usernameSpan.textContent = userData.firstName || 'User'; // Update the username
+                    } else {
+                        console.error("Error fetching user data:", userData.error);
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch user data:", error);
+                }
+            }
+    
+            // Toggle dropdown
+            dropdownButton.addEventListener('click', function (event) {
+                event.stopPropagation();
+                dropdownContent.classList.toggle('show');
+            });
+    
+            // Close dropdown when clicking outside
+            window.addEventListener('click', function (event) {
+                if (!event.target.matches('.dropdown-btn') && !event.target.matches('.fa-ellipsis-vertical')) {
+                    var dropdowns = document.getElementsByClassName('dropdown-content');
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            });
+        });
+    </script>    
+</body>
+</html>

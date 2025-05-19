@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/Image/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="stylesheet" href="adminStaff.css">
+    <title>Admin Staff</title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Image/logo.png" alt="Logo" class="logo-img">
+            <h2>EasyHomeServices</h2>
+        </div>
+        <div class="staff-box">
+            <p>Staff</p>
+        </div>
+        <div class="user-info">
+            <i class="fa fa-user user-icon"></i>
+            <span class="username">Admin</span>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="nav">
+                <ul>
+                    <li><a href="/src/Frontend/Admin/adminDashboard.html" class="menu-item"><i class="fa fa-tachometer-alt icon"></i> Dashboard</a></li>
+                    <li><a href="/src/Frontend/Admin/adminUser.html" class="menu-item"><i class="fa fa-users icon"></i> Users</a></li>
+                    <li><a href="/src/Frontend/Admin/adminStaff.html" class="menu-item"><i class="fa fa-user-tie icon"></i> Staff</a></li>
+                    <li><a href="/src/Frontend/Admin/adminCategory.html" class="menu-item"><i class="fa fa-th icon"></i> Categories</a></li>
+                    <li><a href="/src/Frontend/Admin/adminService.html" class="menu-item"><i class="fa fa-cogs icon"></i> Services</a></li>
+                    <li><a href="/src/Frontend/Admin/adminBookings.html" class="menu-item"><i class="fa-solid fa-bookmark icon"></i> Bookings</a></li>
+                    <li><a href="/src/Frontend/Admin/adminPayments.html" class="menu-item"><i class="fa fa-credit-card icon"></i> Payments</a></li>
+                    <li><a href="#" id="logout-link" class="menu-item"><i class="fa fa-sign-out-alt icon"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Staff Table -->
+            <div class="table-container">
+                <div class="header-row">
+                    <div class="search-container">
+                        <i class="fa fa-search search-icon"></i>
+                        <input type="text" placeholder="Search Staff..." class="search-input">
+                    </div>
+                    <button class="add-staff-button" id="addStaffBtn">Add Staff</button>
+                </div>                    
+                <table class="staff-table">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Staff Name</th>
+                            <th>Phone Number</th>
+                            <th>Category</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffTableBody">
+                    </tbody>
+                </table>
+
+                <!-- Image when there is no data in table -->
+                <div id="noDataRow">
+                    <img src="/Image/404-error.svg" alt="No Data" style="width: 430px; margin-left: 32%;"/>
+                    <p style="font-weight: bold; font-size: 16px; text-align: center;">No Staff available</p>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div class="pagination" id="paginationControls" style="display: none;">
+                    <button id="prevBtn" class="pagination-btn" disabled>Previous</button>
+                    <span id="pageNumber"></span>
+                    <button id="nextBtn" class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Staff Overlay -->
+    <div id="addStaffOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <div class="overlay-logo-container">
+                    <img src="/Image/logo.png" alt="Logo" class="overlay-logo">
+                </div>
+                <p class="overlay-brand-name">EasyHomeServices</p>
+            </div>
+            <h1 class="overlay-title">Add Staff</h1>
+            <form action="" method="post" class="add-staff-form" id="addStaffForm">
+                <div class="form-group">
+                    <label for="add-staff-name">Staff Name:</label>
+                    <input type="text" id="add-staff-name" name="staff-name" placeholder="Enter staff name" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-phone-number">Phone Number:</label>
+                    <input type="text" id="add-phone-number" name="phone-number" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-address">Address:</label>
+                    <input type="text" id="add-address" name="address" placeholder="Enter address" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-category">Category:</label>
+                    <select id="add-category" name="category" required>
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="add-staff-image">Choose Image:</label>
+                    <input type="file" id="add-staff-image" name="staff-image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <img id="add-staff-image-preview" src="" alt="Image Preview" style="display:none; max-width: 100%; max-height: 200px;">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="addCancelBtn">Cancel</button>
+                    <button type="submit" class="submit-button">Add Staff</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!-- Edit Staff Overlay -->
+    <div id="editStaffOverlay" class="overlay">
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <div class="overlay-logo-container">
+                    <img src="/Image/logo.png" alt="Logo" class="overlay-logo">
+                </div>
+                <p class="overlay-brand-name">EasyHomeServices</p>
+            </div>
+            <h1 class="overlay-title">Edit Staff</h1>
+            <form action="" method="post" class="edit-staff-form" id="editStaffForm">
+                <div class="form-group">
+                    <label for="edit-staff-name">Staff Name:</label>
+                    <input type="text" id="edit-staff-name" name="staff-name" placeholder="Enter staff name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-phone-number">Phone Number:</label>
+                    <input type="text" id="edit-phone-number" name="phone-number" placeholder="Enter phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-address">Address:</label>
+                    <input type="text" id="edit-address" name="address" placeholder="Enter address" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">Category:</label>
+                    <select id="edit-category" name="category" required>
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-staff-image">Choose Image:</label>
+                    <input type="file" id="edit-staff-image" name="staff-image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <img id="edit-staff-image-preview" src="" alt="Image Preview" style="display:none; max-width: 100%; max-height: 200px;">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="reset-password-button" id="resetPasswordBtn">Reset Password</button>
+                </div>
+                <div class="form-group form-actions">
+                    <button type="button" class="cancel-button" id="editCancelBtn">Cancel</button>
+                    <button type="submit" class="submit-button">Update Staff</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const currentPage = window.location.pathname.split("/").pop();
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            if (item.getAttribute('href').includes(currentPage)) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    </script>
+    <script src="adminStaff.js"></script>
+</body>
+</html>

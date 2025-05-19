@@ -1,0 +1,532 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Header Styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px 2%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+h2 {
+    font-size: 20px;
+    color: #000000;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    font-size: 20px;
+    color: #000;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 16px;
+    color: #000;
+}
+
+/* Header row styling */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Style for the search container */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 12px 8px 40px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #5b5b5b;
+}
+
+/* Right section styling */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Date Filter Container */
+.date-filter-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.date-input {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.date-input:focus {
+    border-color: #5b5b5b;
+}
+
+/* Filter section */
+.filter-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Status filter dropdown */
+.status-filter-dropdown {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: white;
+    min-width: 150px;
+}
+
+.status-filter-dropdown:focus {
+    border-color: #5b5b5b;
+}
+
+/* Earnings Display */
+.earnings-display {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+}
+
+.earnings-display span#totalEarnings {
+    color: #1A73E8;
+}
+
+.payments-box {
+    color: #333333;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Overlay Styling */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.overlay-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay Header */
+.overlay-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.overlay-logo-container {
+    margin-right: 10px;
+}
+
+.overlay-logo {
+    width: 40px;
+}
+
+.overlay-brand-name {
+    font-size: 20px;
+    color: #000000;
+    font-weight: 600;
+}
+
+/* Overlay Title */
+.overlay-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20fill%3D%22%23333%22%20width%3D%2264px%22%20height%3D%2264px%22%20viewBox%3D%22-6.5%200%2032%2032%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M18.813%2011.406l-7.906%209.906c-0.75%200.906-1.906%200.906-2.625%200l-7.906-9.906c-0.75-0.938-0.375-1.656%200.781-1.656h16.875c1.188%200%201.531%200.719%200.781%201.656z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+.form-group input:disabled,
+.form-group select:disabled {
+    background-color: #f5f5f5;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Form Action Buttons */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit-button,
+.cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1A73E8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 48%;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.cancel-button {
+    background-color: #E81A1A;
+}
+
+.cancel-button:hover {
+    background-color: #c9302c;
+}
+
+/* Image preview inside the overlay */
+#payment-image-preview {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Sidebar Styling */
+.content-container {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: white;
+    color: #1A73E8;
+    height: 100%;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav ul {
+    list-style: none;
+}
+
+.nav ul li {
+    margin: 10px 0;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.nav ul li a .icon {
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.nav ul li a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.nav ul li a.active {
+    background-color: #1A73E8;
+    color: white;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Payment Box */
+.payment-box {
+    color: #333333;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Header Row Styling */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 5px 3%;
+}
+
+.search-input {
+    padding: 10px;
+    font-size: 16px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.status-filter-dropdown {
+    background-color: #1A73E8;
+    color: #ffffff;
+    padding: 10px 40px 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 30px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20fill%3D%22%23ffffff%22%20width%3D%2264px%22%20height%3D%2264px%22%20viewBox%3D%22-6.5%200%2032%2032%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20stroke%3D%22%23ffffff%22%3E%3Cg%20id%3D%22SVGRepo_bgCarrier%22%20stroke-width%3D%220%22%3E%3C%2Fg%3E%3Cg%20id%3D%22SVGRepo_tracerCarrier%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3C%2Fg%3E%3Cg%20id%3D%22SVGRepo_iconCarrier%22%3E%20%3Ctitle%3Edropdown%3C%2Ftitle%3E%20%3Cpath%20d%3D%22M18.813%2011.406l-7.906%209.906c-0.75%200.906-1.906%200.906-2.625%200l-7.906-9.906c-0.75-0.938-0.375-1.656%200.781-1.656h16.875c1.188%200%201.531%200.719%200.781%201.656z%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.status-filter-dropdown option {
+    color: #1a1a1a;
+    background-color: #ffffff;
+}
+
+/* Table Styling */
+.table-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px 3%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.payments-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payments-table thead tr {
+    background-color: #e9e8e8;
+}
+
+.payments-table th,
+.payments-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.payments-table .payment-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.payments-table .payment-image {
+    width: 90px;
+    height: 70px;
+    border-radius: 8px;
+}
+
+.payments-table .payment-name span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Buttons styling */
+.actions-container {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.edit-button,
+.delete-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100px;
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #1A73E8;
+    color: white;
+    margin-right: 5px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #E81A1A;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c9302c;
+}
+
+/* Styled dropdown button */
+.status-dropdown {
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    color: white;
+    border: none;
+    text-align: center;
+    min-width: 120px;
+    cursor: pointer;
+    appearance: none;
+    text-align-last: center;
+    position: relative;
+}
+
+/* status colors */
+.initiated { background-color: #FE9C00; }
+.completed { background-color: #00B050; }
+.partial { background-color: #F97316; }
+.refunded { background-color: #E81A1A; }
+.failed { background-color: #B01D1D; }
+.cancelled { background-color: #B01D1D; }
+
+.status-dropdown option {
+    text-align: left;
+    background-color: white;
+    color: black;
+}
+
+.status-dropdown option:hover {
+    background-color: #f0f0f0;
+}
+
+.status-dropdown:disabled {
+    cursor: not-allowed;
+}
+
+/* Pagination button */
+.pagination-btn {
+    background-color: #1A73E8;
+    color: #ffffff;
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination-btn:disabled {
+    background-color: #ececec;
+    color: #858585;
+    cursor: not-allowed;
+}
+
+.pagination-btn:hover {
+    background-color: #0056b3;
+}
