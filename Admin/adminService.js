@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
         editCategoryDropdown.value = service.category;
         editPriceInput.value = service.price;
         editDescriptionInput.value = service.description;
-        editServiceImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${service.image}`;
+        editServiceImagePreview.src = `https://ehs-deploy.vercel.app/${service.image}`;
         editServiceImagePreview.style.display = "block";
         editServiceImageInput.value = "";
         editServiceOverlay.classList.add("active");
@@ -233,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!validateImageType(file)) {
                 alert("Only images in JPEG, JPG, or PNG formats are allowed");
                 editServiceImageInput.value = "";
-                editServiceImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${existingImagePath}`;
+                editServiceImagePreview.src = `https://ehs-deploy.vercel.app/${existingImagePath}`;
                 editServiceImagePreview.style.display = existingImagePath ? "block" : "none";
                 return;
             }
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             reader.readAsDataURL(file);
         } else {
-            editServiceImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${existingImagePath}`;
+            editServiceImagePreview.src = `https://ehs-deploy.vercel.app/${existingImagePath}`;
             editServiceImagePreview.style.display = existingImagePath ? "block" : "none";
         }
     });
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("image", serviceImage);
         }
 
-        fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/add-service", {
+        fetchWithRetry("https://ehs-deploy.vercel.app/api/add-service", {
             method: "POST",
             body: formData,
         })
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("image", serviceImage);
         }
 
-        fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/update-service/${currentServiceId}`, {
+        fetchWithRetry(`https://ehs-deploy.vercel.app/api/update-service/${currentServiceId}`, {
             method: "PUT",
             body: formData,
         })
@@ -335,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch categories for dropdowns
     async function fetchCategories() {
         try {
-            const categories = await fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/categories", {
+            const categories = await fetchWithRetry("https://ehs-deploy.vercel.app/api/categories", {
                 method: "GET",
             });
             [addCategoryDropdown, editCategoryDropdown].forEach(dropdown => {
@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isFetching = true;
 
         try {
-            const services = await fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/services", {
+            const services = await fetchWithRetry("https://ehs-deploy.vercel.app/api/services", {
                 method: "GET",
             });
             const tableBody = document.querySelector(".service-table tbody");
@@ -390,7 +390,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${startIndex + index + 1}</td>
                         <td>
                             <div class="service-name">
-                                <img src="https://ehs-deploy-8yty.vercel.app/${service.image}" alt="${service.name}" class="service-image">
+                                <img src="https://ehs-deploy.vercel.app/${service.image}" alt="${service.name}" class="service-image">
                                 <span>${service.name}</span>
                             </div>
                         </td>
@@ -412,7 +412,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".edit-button").forEach(button => {
                     button.addEventListener("click", function () {
                         const serviceId = button.getAttribute("data-id");
-                        fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/service/${serviceId}`, {
+                        fetchWithRetry(`https://ehs-deploy.vercel.app/api/service/${serviceId}`, {
                             method: "GET",
                         })
                             .then(service => {
@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     button.addEventListener("click", function () {
                         const serviceId = button.getAttribute("data-id");
                         if (confirm("Are you sure you want to delete this service?")) {
-                            fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/delete-service/${serviceId}`, {
+                            fetchWithRetry(`https://ehs-deploy.vercel.app/api/delete-service/${serviceId}`, {
                                 method: "DELETE",
                             })
                                 .then(data => {

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Send a POST request to the backend for login
-            const response = await fetch("https://ehs-deploy-8yty.vercel.app/api/login", { 
+            const response = await fetch("https://ehs-deploy.vercel.app/api/login", { 
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

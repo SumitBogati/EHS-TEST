@@ -16,7 +16,7 @@ const requestVerificationCode = async () => {
     }
 
     try {
-        const response = await fetch('https://ehs-deploy-8yty.vercel.app/api/forgot-password', {
+        const response = await fetch('https://ehs-deploy.vercel.app/api/forgot-password', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: emailForReset })
@@ -85,7 +85,7 @@ const verifyResetCode = async () => {
     }
 
     try {
-        const response = await fetch('https://ehs-deploy-8yty.vercel.app/api/verify-reset-code', {
+        const response = await fetch('https://ehs-deploy.vercel.app/api/verify-reset-code', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

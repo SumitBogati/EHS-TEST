@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Populate category dropdowns
     async function fetchCategories() {
         try {
-            const categories = await fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/categories");
+            const categories = await fetchWithRetry("https://ehs-deploy.vercel.app/api/categories");
             [addCategoryDropdown, editCategoryDropdown].forEach(dropdown => {
                 dropdown.innerHTML = '<option value="">Select Category</option>';
                 categories.forEach(category => {
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
         editAddressInput.value = staff.address;
         editCategoryDropdown.value = staff.category;
         if (staff.image) {
-            editStaffImagePreview.src = `https://ehs-deploy-8yty.vercel.app/${staff.image}`;
+            editStaffImagePreview.src = `https://ehs-deploy.vercel.app/${staff.image}`;
             editStaffImagePreview.style.display = "block";
         } else {
             editStaffImagePreview.src = "";
@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!validateImageType(file)) {
                 showAlert("Only images in JPEG, JPG, or PNG formats are allowed");
                 editStaffImageInput.value = "";
-                editStaffImagePreview.src = existingImagePath ? `https://ehs-deploy-8yty.vercel.app/${existingImagePath}` : "";
+                editStaffImagePreview.src = existingImagePath ? `https://ehs-deploy.vercel.app/${existingImagePath}` : "";
                 editStaffImagePreview.style.display = existingImagePath ? "block" : "none";
                 return;
             }
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
             };
             reader.readAsDataURL(file);
         } else {
-            editStaffImagePreview.src = existingImagePath ? `https://ehs-deploy-8yty.vercel.app/${existingImagePath}` : "";
+            editStaffImagePreview.src = existingImagePath ? `https://ehs-deploy.vercel.app/${existingImagePath}` : "";
             editStaffImagePreview.style.display = existingImagePath ? "block" : "none";
         }
     });
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const data = await fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/add-staff", {
+            const data = await fetchWithRetry("https://ehs-deploy.vercel.app/api/add-staff", {
                 method: "POST",
                 body: formData,
             });
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const data = await fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/update-staff/${currentStaffId}`, {
+            const data = await fetchWithRetry(`https://ehs-deploy.vercel.app/api/update-staff/${currentStaffId}`, {
                 method: "PUT",
                 body: formData,
             });
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isFetching = true;
 
         try {
-            const staff = await fetchWithRetry("https://ehs-deploy-8yty.vercel.app/api/staff");
+            const staff = await fetchWithRetry("https://ehs-deploy.vercel.app/api/staff");
             const tableBody = document.querySelector(".staff-table tbody");
             const noDataRow = document.getElementById("noDataRow");
             const paginationControls = document.getElementById("paginationControls");
@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${startIndex + index + 1}</td>
                         <td>
                             <div class="staff-name">
-                                ${s.image ? `<img src="https://ehs-deploy-8yty.vercel.app/${s.image}" alt="${s.name}" class="staff-image">` : ''}
+                                ${s.image ? `<img src="https://ehs-deploy.vercel.app/${s.image}" alt="${s.name}" class="staff-image">` : ''}
                                 <span>${s.name}</span>
                             </div>
                         </td>
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".edit-button").forEach(button => {
                     button.addEventListener("click", function () {
                         const staffId = button.getAttribute("data-id");
-                        fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/staff/${staffId}`)
+                        fetchWithRetry(`https://ehs-deploy.vercel.app/api/staff/${staffId}`)
                             .then(staff => {
                                 openEditOverlay(staff);
                             })
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     button.addEventListener("click", function () {
                         const staffId = button.getAttribute("data-id");
                         showAlert("Are you sure you want to delete this staff?", () => {
-                            fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/delete-staff/${staffId}`, {
+                            fetchWithRetry(`https://ehs-deploy.vercel.app/api/delete-staff/${staffId}`, {
                                 method: "DELETE",
                             })
                                 .then(data => {
@@ -435,7 +435,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const confirmed = confirm("Are you sure you want to reset this staff's password?");
         if (confirmed) {
-            fetchWithRetry(`https://ehs-deploy-8yty.vercel.app/api/reset-staff-password/${currentStaffId}`, {
+            fetchWithRetry(`https://ehs-deploy.vercel.app/api/reset-staff-password/${currentStaffId}`, {
                 method: "POST",
             })
                 .then(data => {

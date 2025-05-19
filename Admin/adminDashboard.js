@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
         // Fetch the dashboard stats
-        const response = await fetch('https://ehs-deploy-8yty.vercel.app/api/dashboard/total');
+        const response = await fetch('https://ehs-deploy.vercel.app/api/dashboard/total');
         const data = await response.json();
 
         if (response.ok) {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             // Fetch the top booked services
-            const topServicesResponse = await fetch('https://ehs-deploy-8yty.vercel.app/api/services/top-booked');
+            const topServicesResponse = await fetch('https://ehs-deploy.vercel.app/api/services/top-booked');
             const topServicesData = await topServicesResponse.json();
 
             if (topServicesResponse.ok) {
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     topServicesData.forEach(service => {
                         const listItem = document.createElement('li');
                         listItem.innerHTML = `
-                            <img src="https://ehs-deploy-8yty.vercel.app/${service.image}" alt="${service.name}">
+                            <img src="https://ehs-deploy.vercel.app/${service.image}" alt="${service.name}">
                             <span>${service.name}</span>
                             <span class="service-count">${service.count}</span>
                         `;
