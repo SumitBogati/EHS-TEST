@@ -129,7 +129,7 @@ function setupSidebarSwitching() {
 
 async function fetchUserData(userId) {
     try {
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+        const response = await fetch(`https://ehs-deploy.vercel.app/api/users/${userId}`);
         const userData = await response.json();
 
         if (response.ok) {
@@ -173,7 +173,7 @@ async function saveChanges(userId) {
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/api/update-users/${userId}`, {
+        const response = await fetch(`https://ehs-deploy.vercel.app/api/update-users/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +224,7 @@ async function changePassword(userId) {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/change-password', {
+        const response = await fetch('https://ehs-deploy.vercel.app/api/change-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

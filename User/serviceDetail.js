@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/service/${serviceId}`);
+            const response = await fetch(`https://ehs-deploy.vercel.app/api/service/${serviceId}`);
             if (!response.ok) throw new Error("Failed to fetch service details.");
 
             const service = await response.json();
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".service-name").textContent = service.name;
         document.querySelector(".service-category").textContent = service.category;
         document.querySelector(".service-description").textContent = service.description;
-        document.querySelector(".service-image").src = `http://localhost:3000/${service.image}`;
+        document.querySelector(".service-image").src = `https://ehs-deploy.vercel.app/${service.image}`;
         const servicePriceElement = document.querySelector(".service-price");
         servicePriceElement.textContent = `Rs. ${service.price}`;
         servicePriceElement.setAttribute("data-price", service.price);
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch staff based on service category
     async function fetchStaffByCategory(category) {
         try {
-            const response = await fetch("http://localhost:3000/api/staff");
+            const response = await fetch("https://ehs-deploy.vercel.app/api/staff");
             if (!response.ok) throw new Error("Failed to fetch staff details.");
 
             const staffList = await response.json();
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/api/bookings", {
+            const response = await fetch("https://ehs-deploy.vercel.app/api/bookings", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(bookingData),
