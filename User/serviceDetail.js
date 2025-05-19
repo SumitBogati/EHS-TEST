@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Redirect to Khalti Payment Page
                     window.location.href = result.payment_url;
                 } else {
-                    // Handle case where payment is already processed (unlikely in your flow)
+                    // Handle case where payment is already processed
                     Swal.fire({
                         icon: "success",
                         title: "Booking Initiated",

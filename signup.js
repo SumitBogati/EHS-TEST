@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const userRole = responseData.user.role;
                 // If the role is user, redirect to user service page
                 if (userRole === 'user') {
-                    window.location.href = "userService.html"; // Redirect to user page
+                    window.location.href = "User/userService.html"; // Redirect to user page
                 } else {
                     window.location.href = "/index.html"; // Default redirect if role is unknown or other roles
                 }
